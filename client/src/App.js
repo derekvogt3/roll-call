@@ -18,6 +18,7 @@ import Profile from "./pages/Profile";
 import Notifications from "./pages/Notifications";
 import History from "./pages/History";
 import Chats from "./pages/Chats";
+import GroupFocus from "./page_components/groups/GroupFocus";
 import { Link } from "react-router-dom";
 
 const user = {
@@ -39,7 +40,7 @@ function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
     <BrowserRouter>
-      <div className="h-full flex">
+      <div className="h-screen flex">
         <Transition.Root show={mobileMenuOpen} as={Fragment}>
           <Dialog
             as="div"
@@ -215,16 +216,15 @@ function App() {
             </div>
           </div>
 
-          <main className="flex-1 flex overflow-auto">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="groups" element={<Groups />} />
-              <Route path="notifications" element={<Notifications />} />
-              <Route path="history" element={<History />} />
-              <Route path="chats" element={<Chats />} />
-              <Route path="profile" element={<Profile />} />
-            </Routes>
-          </main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="groups" element={<Groups />}></Route>
+            <Route path="groups/:id" element={<GroupFocus />} />
+            <Route path="notifications" element={<Notifications />} />
+            <Route path="history" element={<History />} />
+            <Route path="chats" element={<Chats />} />
+            <Route path="profile" element={<Profile />} />
+          </Routes>
         </div>
       </div>
     </BrowserRouter>

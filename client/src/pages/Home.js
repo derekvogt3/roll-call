@@ -4,7 +4,7 @@ import ImageMarker from "../common/ImageMarker";
 
 export default function Home() {
   return (
-    <div>
+    <div className="overflow-auto">
       <PictureMap />
     </div>
   );

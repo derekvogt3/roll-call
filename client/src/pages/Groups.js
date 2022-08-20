@@ -1,4 +1,5 @@
 import GroupSummary from "../page_components/groups/GroupSummary";
+import { Link, Outlet } from "react-router-dom";
 
 const groups = [
   {
@@ -92,9 +93,11 @@ const groups = [
 
 export default function Groups() {
   return (
-    <div>
-      <div className="pb-5 border-b border-gray-200 sm:flex sm:items-center sm:justify-between">
-        <h3 className="text-lg leading-6 font-medium text-gray-900">Groups</h3>
+    <div className="p-2">
+      <div className="pb-5 border-b border-gray-200 flex items-center justify-between">
+        <h3 className="text-lg leading-6 font-medium text-gray-900">
+          My Groups
+        </h3>
         <div className="mt-3 flex sm:mt-0 sm:ml-4">
           <button
             type="button"
@@ -112,6 +115,7 @@ export default function Groups() {
           ))}
         </ul>
       </div>
+      <Outlet />
     </div>
   );
 }

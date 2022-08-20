@@ -1,10 +1,11 @@
 import React from "react";
 import { CalendarIcon, ChevronRightIcon } from "@heroicons/react/solid";
+import { Link } from "react-router-dom";
 
 export default function GroupSummary({ group }) {
   return (
     <li key={group.id}>
-      <a href="#" className="block hover:bg-gray-50">
+      <Link to="/groups/1" className="block hover:bg-gray-50">
         <div className="px-4 py-4 flex items-center sm:px-6">
           <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
             <div className="truncate">
@@ -51,7 +52,7 @@ export default function GroupSummary({ group }) {
             />
           </div>
         </div>
-      </a>
+      </Link>
     </li>
   );
 }
