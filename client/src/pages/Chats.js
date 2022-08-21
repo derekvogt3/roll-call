@@ -16,13 +16,7 @@ export default function Chats() {
       </div>
       <div className="flex flex-col border-gray-200 border-2 h-screen">
         <div className="border-gray-200 border-b-2 ">This chat</div>
-        <div className="grow">
-          <h1>test</h1>
-          <h1>test</h1>
-          <h1>test</h1>
-          <h1>test</h1>
-          <h1>test</h1>
-        </div>
+        <div className="grow"></div>
 
         <div>
           <div className="flex items-center justify-between w-full p-3 border-t border-gray-300">
