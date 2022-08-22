@@ -1,12 +1,10 @@
 import React from "react";
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { CheckIcon } from "@heroicons/react/outline";
+import { XIcon } from "@heroicons/react/outline";
 
 export default function ImageMarker({ postObj }) {
   const [open, setOpen] = useState(false);
-
-  const cancelButtonRef = useRef(null);
 
   return (
     <>
@@ -49,30 +47,27 @@ export default function ImageMarker({ postObj }) {
           </Transition.Child>
 
           <div className="fixed z-10 inset-0 overflow-y-auto">
-            <div className="flex items-end sm:items-center justify-center min-h-full p-4 text-center sm:p-0">
+            <div className="flex items-center justify-center min-h-full p-4 text-center p-0">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
-                enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
-                enterTo="opacity-100 translate-y-0 sm:scale-100"
+                enterFrom="opacity-0 translate-y-0 scale-95"
+                enterTo="opacity-100 scale-100"
                 leave="ease-in duration-200"
-                leaveFrom="opacity-100 translate-y-0 sm:scale-100"
-                leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                leaveFrom="opacity-100 translate-y-0 scale-100"
+                leaveTo="opacity-0 translate-y-0 scale-95"
               >
-                <Dialog.Panel className="relative bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:max-w-lg sm:w-full sm:p-6">
-                  <div>
-                    <div className="mt-3 text-center sm:mt-5">
-                      <div className="mt-2">
-                        <img
-                          className="inline-block h-14 w-14 ring-2 ring-white object-cover"
-                          src={
-                            postObj.hasChildren
-                              ? postObj.children[0].properties.img
-                              : postObj.properties.img
-                          }
-                        />
-                      </div>
-                    </div>
+                <Dialog.Panel className="relative bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
+                  <div className="flex flex-col">
+                    <XIcon className="h-4 w-4 self-end" />
+                    <img
+                      className="ring-2 ring-white object-cover"
+                      src={
+                        postObj.hasChildren
+                          ? postObj.children[0].properties.img
+                          : postObj.properties.img
+                      }
+                    />
                   </div>
                 </Dialog.Panel>
               </Transition.Child>

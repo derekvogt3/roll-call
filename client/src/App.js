@@ -105,6 +105,7 @@ function App() {
                       <div className="px-2 space-y-1">
                         {navigation.map((item) => (
                           <Link
+                            key={item.href}
                             to={item.href}
                             className="group p-2 rounded-md flex items-center text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900"
                           >
@@ -166,6 +167,7 @@ function App() {
                 >
                   {navigation.map((item) => (
                     <Link
+                      key={item.href}
                       to={item.href}
                       className="flex items-center p-4 rounded-lg text-indigo-200 hover:bg-indigo-700"
                     >
