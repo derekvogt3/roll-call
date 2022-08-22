@@ -65,7 +65,11 @@ export default function ImageMarker({ postObj }) {
                       <div className="mt-2">
                         <img
                           className="inline-block h-14 w-14 ring-2 ring-white object-cover"
-                          src={postObj}
+                          src={
+                            postObj.hasChildren
+                              ? postObj.children[0].properties.img
+                              : postObj.properties.img
+                          }
                         />
                       </div>
                     </div>

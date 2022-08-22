@@ -10,26 +10,26 @@ import ImageMarker from "./ImageMarker";
 const images = [
   {
     id: 1,
-    img: "https://upload.wikimedia.org/wikipedia/commons/0/0b/Cat_poster_1.jpg",
+    img: "https://randomwordgenerator.com/img/picture-generator/52e1dd464357a814f1dc8460962e33791c3ad6e04e507440752f78d0974cc2_640.jpg",
     lat: 59.955413,
     lng: 30.337844,
   },
   {
     id: 2,
-    img: "https://upload.wikimedia.org/wikipedia/commons/0/0b/Cat_poster_1.jpg",
+    img: "https://randomwordgenerator.com/img/picture-generator/hands-423794_640.jpg",
     lat: 60.955413,
     lng: 31.337844,
   },
   {
     id: 3,
-    img: "https://upload.wikimedia.org/wikipedia/commons/0/0b/Cat_poster_1.jpg",
+    img: "https://randomwordgenerator.com/img/picture-generator/55e4d545425aa514f1dc8460962e33791c3ad6e04e507440742f7cd0944fcd_640.jpg",
     lat: 58.955413,
     lng: 29.337844,
   },
 
   {
     id: 4,
-    img: "https://upload.wikimedia.org/wikipedia/commons/0/0b/Cat_poster_1.jpg",
+    img: "https://randomwordgenerator.com/img/picture-generator/54e1dc474856ad14f1dc8460962e33791c3ad6e04e5074417d2d73dc9145c5_640.jpg",
     lat: 70.955413,
     lng: 70.337844,
   },
@@ -100,7 +100,6 @@ export default function PictureMap() {
         properties: cluster.properties,
       };
     }
-    console.log(postObj);
 
     return (
       <ImageMarker
