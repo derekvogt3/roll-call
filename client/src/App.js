@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 /* This example requires Tailwind CSS v2.0+ */
-import { Fragment, useState } from "react";
+import { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import {
   HomeIcon,
@@ -18,15 +18,18 @@ import Profile from "./pages/Profile";
 import Notifications from "./pages/Notifications";
 import History from "./pages/History";
 import Chats from "./pages/Chats";
+import Login from "./pages/Login";
 import GroupFocus from "./page_components/groups/GroupFocus";
 import { Link } from "react-router-dom";
 
+/*
 const user = {
   name: "Emily Selman",
   email: "emily.selman@example.com",
   imageUrl:
     "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 };
+
 const navigation = [
   { name: "Home", href: "/", icon: HomeIcon },
   { name: "Groups", href: "groups", icon: UserGroupIcon },
@@ -35,9 +38,23 @@ const navigation = [
   { name: "Chat", href: "chats", icon: ChatAlt2Icon },
   { name: "Profile", href: "profile", icon: UserIcon },
 ];
+*/
 
 function App() {
+
+  const [user, setUser] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    fetch('/me').then((r) => {
+      if (r.ok) {
+        r.json().then(data => setUser(data))
+      }
+    });
+  }, []);
+
+  if(!user) return <Login setUser={ setUser } />;
+
   return (
     <BrowserRouter>
       <div className="h-screen flex">
@@ -217,7 +234,7 @@ function App() {
           </div>
 
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/home" element={<Home />} />
             <Route path="groups" element={<Groups />}></Route>
             <Route path="groups/:id" element={<GroupFocus />} />
             <Route path="notifications" element={<Notifications />} />

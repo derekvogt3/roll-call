@@ -13,7 +13,7 @@ class User < ApplicationRecord
     # Links to password_digest column
     has_secure_password
 
-    validates :name, :email, :password, presence: true
+    validates :username, :email, :password, presence: true
     validates :email, uniqueness: true
 
 end

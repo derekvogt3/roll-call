@@ -1,6 +1,41 @@
+import { useState } from "react";
+// import { useNavigate } from "react-router-dom";
 import { LockClosedIcon } from "@heroicons/react/solid";
 
-export default function Login() {
+export default function LoginForm({ setUser }) {
+  // eslint-disable-next-line
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  // eslint-disable-next-line
+  const [errors, setErrors] = useState([]);
+  // eslint-disable-next-line
+  const [isLoading, setIsLoading] = useState(false);
+
+  // let navigate = useNavigate();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    setIsLoading(true);
+    setErrors([]);
+    fetch("/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accepts": "application/json",
+      },
+      body: JSON.stringify({ username, password }),
+    }).then((r) => {
+      setIsLoading(false);
+      if (r.ok) {
+        r.json().then((user) => setUser(user));
+        // navigate("/home")
+      } else {
+        r.json().then((err) => setErrors(err.errors));
+      }
+    });
+  }
+
   return (
     <>
       {/*
@@ -22,7 +57,7 @@ export default function Login() {
             <h2 className="mt-6 text-center text-3xl tracking-tight font-bold text-gray-900">
               Sign in to your account
             </h2>
-            <p className="mt-2 text-center text-sm text-gray-600">
+            {/*<p className="mt-2 text-center text-sm text-gray-600">
               Or{" "}
               <a
                 href="#"
@@ -30,23 +65,26 @@ export default function Login() {
               >
                 start your 14-day free trial
               </a>
-            </p>
+            </p>*/}
           </div>
-          <form className="mt-8 space-y-6" action="#" method="POST">
+          {/*<form className="mt-8 space-y-6" action="#" method="POST">*/}
+          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
-                <label htmlFor="email-address" className="sr-only">
+                <label htmlFor="username" className="sr-only">
                   Email address
                 </label>
                 <input
-                  id="email-address"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
+                  id="username"
+                  name="username"
+                  type="username"
+                  autoComplete="username"
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Email address"
+                  placeholder="Username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
               <div>
@@ -61,6 +99,8 @@ export default function Login() {
                   required
                   className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
             </div>
@@ -80,7 +120,7 @@ export default function Login() {
                   Remember me
                 </label>
               </div>
-
+              {/* 
               <div className="text-sm">
                 <a
                   href="#"
@@ -89,6 +129,7 @@ export default function Login() {
                   Forgot your password?
                 </a>
               </div>
+              */}
             </div>
 
             <div>

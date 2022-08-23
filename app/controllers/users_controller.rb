@@ -1,4 +1,4 @@
-class UserController < ApplicationController
+class UsersController < ApplicationController
 
     skip_before_action :authorize, only: [:create]
 
@@ -24,7 +24,7 @@ class UserController < ApplicationController
     private
 
     def user_params
-        params.permit(:name, :email, :password)
+        params.permit(:username, :email, :avatar, :password)
     end
     
 end
