@@ -1,5 +1,4 @@
 import { useState } from "react";
-// import { useNavigate } from "react-router-dom";
 import { LockClosedIcon } from "@heroicons/react/solid";
 
 export default function SignUpForm({ setUser }) {
@@ -14,8 +13,6 @@ export default function SignUpForm({ setUser }) {
     const [errors, setErrors] = useState([]);
     // eslint-disable-next-line
     const [isLoading, setIsLoading] = useState(false);
-
-    // let navigate = useNavigate();
 
     function handleSubmit(e) {
         e.preventDefault();
@@ -35,7 +32,6 @@ export default function SignUpForm({ setUser }) {
         setIsLoading(false);
         if (r.ok) {
             r.json().then((user) => setUser(user));
-            // navigate("/home")
         } else {
             r.json().then((err) => setErrors(err.errors));
         }

@@ -243,6 +243,7 @@ function App() {
             <Route path="history" element={<History />} />
             <Route path="chats" element={<Chats />} />
             <Route path="profile" element={<Profile />} />
+            <Route path="login" element={<Login />} />
           </Routes>
         </div>
       </div>
