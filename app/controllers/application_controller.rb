@@ -5,6 +5,7 @@ class ApplicationController < ActionController::API
   rescue_from ActiveRecord::RecordNotFound, with: :render_record_not_found
   rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity
   
+  before_action :current_user
   before_action :authorize
 
   def hello_world

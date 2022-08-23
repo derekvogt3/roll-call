@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
 
     before_action :set_group, only: [:show, :update, :destroy]
-
+    
     def index
         render json: Group.all
     end
@@ -15,7 +15,7 @@ class GroupsController < ApplicationController
     end
 
     def update  
-        @group.update!(group_params), status: :accepted
+        render json: @group.update!(group_params), status: :accepted
     end
 
     def destroy
