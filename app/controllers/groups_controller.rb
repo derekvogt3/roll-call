@@ -3,7 +3,8 @@ class GroupsController < ApplicationController
     before_action :set_group, only: [:show, :update, :destroy]
     
     def index
-        render json: Group.all
+        groups = User.find(session[:user_id]).groups
+        render json: groups
     end
 
     def show

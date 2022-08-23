@@ -1,7 +1,7 @@
 import GroupSummary from "../page_components/groups/GroupSummary";
 import { Link, Outlet } from "react-router-dom";
 import CreateGroupModal from "../page_components/groups/CreateGroupModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const groups = [
   {
@@ -95,6 +95,11 @@ const groups = [
 
 export default function Groups() {
   const [openCreate, setOpenCreate] = useState(false);
+  useEffect(() => {
+    fetch("/groups")
+      .then((res) => res.json())
+      .then((data) => console.log(data));
+  }, []);
   return (
     <div className="p-2">
       <div className="pb-5 border-b border-gray-200 flex items-center justify-between">

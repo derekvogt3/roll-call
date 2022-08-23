@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :roll_call_posts, only: [:index, :show, :create, :destroy]
   resources :groups
   resources :user_groups
-  resources :users, only: [:show, :create, :update, :destroy]
+  resources :users, only: [:show, :create, :update, :destroy,:index]
 
   # Login user
   post "/login", to: "session#create"
