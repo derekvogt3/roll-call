@@ -1,5 +1,7 @@
 import GroupSummary from "../page_components/groups/GroupSummary";
 import { Link, Outlet } from "react-router-dom";
+import CreateGroupModal from "../page_components/groups/CreateGroupModal";
+import { useState } from "react";
 
 const groups = [
   {
@@ -92,6 +94,7 @@ const groups = [
 ];
 
 export default function Groups() {
+  const [openCreate, setOpenCreate] = useState(false);
   return (
     <div className="p-2">
       <div className="pb-5 border-b border-gray-200 flex items-center justify-between">
@@ -102,6 +105,7 @@ export default function Groups() {
           <button
             type="button"
             className="ml-3 inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            onClick={() => setOpenCreate(true)}
           >
             Create New Group
           </button>
@@ -116,6 +120,7 @@ export default function Groups() {
         </ul>
       </div>
       <Outlet />
+      <CreateGroupModal openCreate={openCreate} setOpenCreate={setOpenCreate} />
     </div>
   );
 }
