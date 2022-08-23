@@ -12,6 +12,7 @@ class User < ApplicationRecord
     # Hash & salts passwords
     # Links to password_digest column
     has_secure_password
+    has_one_attached :avatar
 
     validates :username, :email, :password, presence: true
     validates :email, uniqueness: true

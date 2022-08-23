@@ -18,8 +18,8 @@ class SessionController < ApplicationController
     # Logged in user
     def show 
         # Grab user class var from application_controller
-        if @current_user
-            render json: @current_user
+        if current_user
+            render json: current_user
         else
             render json: { message: "You must be logged in" }, status: :unauthorized
         end

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { LockClosedIcon } from "@heroicons/react/solid";
 
 export default function SignUpForm({ setUser }) {
@@ -7,31 +8,34 @@ export default function SignUpForm({ setUser }) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [passwordConfirmation, setPasswordConfirmation] = useState("");
-    // eslint-disable-next-line
-    const [image, setImage] = useState("");
+    const [avatar, setAvatar] = useState(null);
     // eslint-disable-next-line
     const [errors, setErrors] = useState([]);
     // eslint-disable-next-line
     const [isLoading, setIsLoading] = useState(false);
 
+    const navigate = useNavigate();
+
     function handleSubmit(e) {
         e.preventDefault();
-        setErrors([]);
+
+        const formData = new FormData()
+        formData.append("username", username)
+        formData.append("email", email)
+        formData.append("password", password)
+        formData.append("avatar", avatar)
+
         setIsLoading(true);
-        fetch("/users", {
+
+        fetch("/users", { 
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            username,
-            email,
-            password,
-        }),
+        body: formData
         }).then((r) => {
         setIsLoading(false);
         if (r.ok) {
             r.json().then((user) => setUser(user));
+            setErrors([])
+            navigate("/")
         } else {
             r.json().then((err) => setErrors(err.errors));
         }
@@ -57,7 +61,7 @@ export default function SignUpForm({ setUser }) {
               alt="Workflow"
             />
             <h2 className="mt-6 text-center text-3xl tracking-tight font-bold text-gray-900">
-              Sign in to your account
+              Create your account 
             </h2>
             {/*<p className="mt-2 text-center text-sm text-gray-600">
               Or{" "}
@@ -103,6 +107,21 @@ export default function SignUpForm({ setUser }) {
                   placeholder="Email address"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
+              <div>
+                <label htmlFor="avatar" className="sr-only">
+                  Avatar
+                </label>
+                <input
+                  id="avatar"
+                  name="avatar"
+                  type="file"
+                  autoComplete="avatar"
+                  required
+                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  placeholder="Avatar"
+                  onChange={(e) => setAvatar(e.target.files[0])}
                 />
               </div>
               <div>

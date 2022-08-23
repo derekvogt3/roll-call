@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
 /* This example requires Tailwind CSS v2.0+ */
 import { Fragment, useState, useEffect } from "react";
@@ -29,6 +29,7 @@ const user = {
   imageUrl:
     "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 };
+*/
 
 const navigation = [
   { name: "Home", href: "/", icon: HomeIcon },
@@ -38,25 +39,31 @@ const navigation = [
   { name: "Chat", href: "chats", icon: ChatAlt2Icon },
   { name: "Profile", href: "profile", icon: UserIcon },
 ];
-*/
+
 
 function App() {
 
   const [user, setUser] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    fetch('/me').then((r) => {
+    fetch('/me')
+    .then((r) => {
+      setLoaded(true)
       if (r.ok) {
-        r.json().then(data => setUser(data))
+        console.log("ME DATA: ", r);
+        r.json().then((data) => setUser(data))
       }
     });
   }, []);
 
+  if(!loaded) return <></>;
+
   if(!user) return <Login setUser={ setUser } />;
 
   return (
-    <BrowserRouter>
+    <>
       <div className="h-screen flex">
         <Transition.Root show={mobileMenuOpen} as={Fragment}>
           <Dialog
@@ -137,6 +144,7 @@ function App() {
                     </nav>
                   </div>
                   <div className="flex-shrink-0 flex border-t border-gray-200 p-4">
+                    {/*
                     <a href="#" className="flex-shrink-0 group block">
                       <div className="flex items-center">
                         <div>
@@ -156,6 +164,7 @@ function App() {
                         </div>
                       </div>
                     </a>
+                    */}
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
@@ -195,6 +204,7 @@ function App() {
                 </nav>
               </div>
               <div className="flex-shrink-0 flex pb-5">
+                {/*
                 <a href="#" className="flex-shrink-0 w-full">
                   <img
                     className="block mx-auto h-10 w-10 rounded-full"
@@ -206,6 +216,7 @@ function App() {
                     <p>Account settings</p>
                   </div>
                 </a>
+                  */}
               </div>
             </div>
           </div>
@@ -236,18 +247,18 @@ function App() {
           </div>
 
           <Routes>
-            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Home />} />
             <Route path="groups" element={<Groups />}></Route>
             <Route path="groups/:id" element={<GroupFocus />} />
             <Route path="notifications" element={<Notifications />} />
             <Route path="history" element={<History />} />
             <Route path="chats" element={<Chats />} />
-            <Route path="profile" element={<Profile />} />
-            <Route path="login" element={<Login />} />
+            <Route path="profile" element={<Profile setUser={ setUser } user={ user } />} />
+            <Route path="/login" element={<Login setUser={ setUser } />} />
           </Routes>
         </div>
       </div>
-    </BrowserRouter>
+    </>
   );
 }
 
