@@ -40,27 +40,29 @@ const navigation = [
   { name: "Profile", href: "profile", icon: UserIcon },
 ];
 
-
 function App() {
-
   const [user, setUser] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
+
     fetch('/me')
     .then((r) => {
       setLoaded(true)
       if (r.ok) {
         console.log("ME DATA: ", r);
         r.json().then((data) => setUser(data))
+
       }
     });
   }, []);
 
+
   if(!loaded) return <></>;
 
   if(!user) return <Login setUser={ setUser } />;
+
 
   return (
     <>
