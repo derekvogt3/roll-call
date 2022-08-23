@@ -51,32 +51,53 @@ export default function CreateGroupModal({ openCreate, setOpenCreate }) {
   const [groupName, setGroupName] = useState("");
   const [nav, setNav] = useState(0);
 
+  function handleCreateGroup() {
+    const obj = {
+      name: groupName,
+    };
+    fetch("/groups", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(obj),
+    })
+      .then((data) => data.json())
+      .then((res) => console.log(res));
+  }
+
   function postPage() {
     if (nav === 0) {
       return (
         <div className="p-4 flex flex-col">
-          <div className="relative border border-gray-300 rounded-md px-3 py-2 shadow-sm focus-within:ring-1 focus-within:ring-indigo-600 focus-within:border-indigo-600">
+          <div>
             <label
               htmlFor="name"
-              className="absolute -top-2 left-2 -mt-px inline-block px-1 bg-white text-xs font-medium text-gray-900"
+              className="ml-px pl-4 block text-sm font-medium text-gray-700"
             >
               Group Name
             </label>
-            <input
-              type="text"
-              name="name"
-              id="name"
-              className="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm"
-              placeholder="Awesome group name"
-              value={groupName}
-            />
+            <div className="mt-1">
+              <input
+                type="text"
+                name="name"
+                id="name"
+                className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 px-4 rounded-full"
+                placeholder="super cool group name"
+                value={groupName}
+                onChange={(e) => setGroupName(e.target.value)}
+              />
+            </div>
           </div>
 
           <div className="p-2">
             <button
               type="button"
               className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-              onClick={() => setNav(1)}
+              onClick={() => {
+                setNav(1);
+                handleCreateGroup();
+              }}
             >
               Create Group
             </button>

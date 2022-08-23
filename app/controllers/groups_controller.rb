@@ -11,11 +11,13 @@ class GroupsController < ApplicationController
     end
 
     def create
-        render json: Group.create!(group_params), status: :created
+        group = Group.create!(name:params[:name],admin: session[:user_id])
+        UserGroup.create!(group_id:group.id,user_id:session[:user_id])
+        render json: group, status: :created
     end
 
     def update  
-        @group.update!(group_params), status: :accepted
+        render json: @group.update!(group_params), status: :accepted
     end
 
     def destroy
