@@ -1,6 +1,6 @@
 import { useState } from "react";
-import LoginForm from "../page_components/groups/LoginForm";
-import SignUpForm from "../page_components/groups/SignUpForm";
+import LoginForm from "../page_components/authentication/LoginForm";
+import SignUpForm from "../page_components/authentication/SignUpForm";
 
 export default function Login({ setUser }) {
 
