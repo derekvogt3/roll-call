@@ -29,6 +29,7 @@ const user = {
   imageUrl:
     "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
 };
+*/
 
 const navigation = [
   { name: "Home", href: "/", icon: HomeIcon },
@@ -38,22 +39,20 @@ const navigation = [
   { name: "Chat", href: "chats", icon: ChatAlt2Icon },
   { name: "Profile", href: "profile", icon: UserIcon },
 ];
-*/
 
 function App() {
-
   const [user, setUser] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
-    fetch('/me').then((r) => {
+    fetch("/me").then((r) => {
       if (r.ok) {
-        r.json().then(data => setUser(data))
+        r.json().then((data) => setUser(data));
       }
     });
   }, []);
 
-  if(!user) return <Login setUser={ setUser } />;
+  if (!user) return <Login setUser={setUser} />;
 
   return (
     <BrowserRouter>
@@ -236,7 +235,7 @@ function App() {
           </div>
 
           <Routes>
-            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Home />} />
             <Route path="groups" element={<Groups />}></Route>
             <Route path="groups/:id" element={<GroupFocus />} />
             <Route path="notifications" element={<Notifications />} />
