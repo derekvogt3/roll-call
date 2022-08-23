@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
 
     before_action :set_group, only: [:show, :update, :destroy]
-
+    
     def index
         render json: Group.all
     end
