@@ -34,8 +34,8 @@ export default function PictureMap({ posts, mapWidth, mapHeight }) {
   const points = posts.map((post) => ({
     type: "Feature",
     properties: {
-      img: post.img,
-      caption: "this is a test",
+      img: post.photo_url,
+      caption: post.comment,
       id: post.id,
     },
     geometry: { type: "Point", coordinates: [post.lng, post.lat] },

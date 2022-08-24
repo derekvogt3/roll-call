@@ -47,6 +47,7 @@ const images = [
 
 export default function RollCallHome({ rollCall }) {
   const [openPost, setOpenPost] = useState(false);
+  console.log(rollCall);
 
   return (
     <>

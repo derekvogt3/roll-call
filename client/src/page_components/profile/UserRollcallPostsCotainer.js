@@ -1,12 +1,9 @@
 import UserRollcallPosts from "./UserRollcallPosts";
 
-export default function UserRollcallPostsContainer({ user }){
+export default function UserRollcallPostsContainer({ user }) {
+  const mappedRollCalls = user.roll_call_posts.map((post) => (
+    <UserRollcallPosts key={post.id} photo={post.photo} />
+  ));
 
-    const mappedRollCalls = user.rollCallPosts.map((post) => <UserRollcallPosts key={post.id} photo={post.photo} />)
-    
-    return (
-        <>
-            {mappedRollCalls}
-        </>
-    );
-};
+  return <>{mappedRollCalls}</>;
+}

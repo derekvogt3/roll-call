@@ -7,7 +7,7 @@ class RollCallPost < ApplicationRecord
 
     has_one_attached :photo
 
-    validates :photo, :lat, :lng, :comment, presence: true
+    validates :lat, :lng, :comment, presence: true
 
     
 end

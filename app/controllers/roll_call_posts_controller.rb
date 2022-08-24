@@ -11,8 +11,16 @@ class RollCallPostsController < ApplicationController
     end
 
     def create
-        
-        new_roll_call = RollCallPost.create!(a_roll_call_id:params[:a_roll_call_id], photo:params[:photo], lat:params[:lat],lng:params[:lng], comment:params[:comment],user_id:session[:user_id])
+
+        new_roll_call = RollCallPost.create!(a_roll_call_id:params[:a_roll_call_id], lat:params[:lat],lng:params[:lng], comment:params[:comment],user_id:session[:user_id])
+        blob = ActiveStorage::Blob.create_and_upload!(
+            io: StringIO.new((Base64.decode64(params[:photo].split(",")[1]))),
+            filename: params[:a_roll_call_id].to_s+"a"+session[:user_id].to_s+".png",
+            content_type: "image/png",
+          )
+
+        new_roll_call.photo.attach(blob)
+
         render json: new_roll_call, status: :created
     end
 
