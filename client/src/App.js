@@ -250,12 +250,12 @@ function App() {
 
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="groups" element={<Groups />}></Route>
-            <Route path="groups/:id" element={<GroupFocus />} />
-            <Route path="notifications" element={<Notifications />} />
-            <Route path="history" element={<History />} />
-            <Route path="chats" element={<Chats />} />
-            <Route path="profile" element={<Profile setUser={ setUser } user={ user } />} />
+            <Route path="/groups" element={<Groups />}></Route>
+            <Route path="/groups/:id" element={<GroupFocus />} />
+            <Route path="/notifications" element={<Notifications />} />
+            <Route path="/history" element={<History />} />
+            <Route path="/chats" element={<Chats />} />
+            <Route path="/profile" element={<Profile setUser={ setUser } user={ user } />} />
             <Route path="/login" element={<Login setUser={ setUser } />} />
           </Routes>
         </div>

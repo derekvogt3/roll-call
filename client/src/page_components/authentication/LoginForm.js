@@ -29,7 +29,7 @@ export default function LoginForm({ setUser }) {
       setIsLoading(false);
       if (r.ok) {
         r.json().then((user) => setUser(user));
-        navigate("/")
+        navigate("/profile")
       } else {
         r.json().then((err) => setErrors(err.errors));
       }
