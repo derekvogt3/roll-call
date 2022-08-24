@@ -1,11 +1,11 @@
 class RollCallPost < ApplicationRecord
 
-    belongs_to :ARollCall
+    belongs_to :a_roll_call
 
-    has_many :users 
+    belongs_to :users 
 
     has_one_attached :photo
 
-    validates :photo, :location, :comment, presence: true
+    validates :photo, :long, :lat, :comment, presence: true
     
 end

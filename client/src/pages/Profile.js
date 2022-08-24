@@ -1,12 +1,18 @@
 import { useState } from "react";
-import { useNavigate, Outlet } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from 'react-toastify';
 import AddAvatarModal from "../page_components/profile/AddAvatarModal";
+import UserRollcallPostsContainer from "../page_components/profile/UserRollcallPostsCotainer";
 
-export default function Profile({ user, setUser }) {
+import 'react-toastify/dist/ReactToastify.css';
+
+export default function Profile({ user, setUser, refresh, setRefresh }) {
 
   const [openCreate, setOpenCreate] = useState(false);
 
   const navigate = useNavigate();
+
+  console.log("USER: ", user);
   
   function logout(){
     fetch("/logout", { method: "DELETE" })
@@ -16,7 +22,7 @@ export default function Profile({ user, setUser }) {
 
   return ( 
     <div className="basis-1/4 flex items-center flex-col justify-center py-12 px-4 sm:px-6 lg:px-80">
-      <h1>WELCOME {user.username.toUpperCase()}</h1>
+      <h1>WELCOME {user.username.toUpperCase()}!</h1>
       <br/>
       <div>
         {user.avatar_url ? <img className="w-40 h-40 rounded-full" src={user.avatar_url} alt={"user's avatar!"} />
@@ -40,28 +46,9 @@ export default function Profile({ user, setUser }) {
         logout
       </button>
       {openCreate ? 
-        <AddAvatarModal openCreate={openCreate} setOpenCreate={setOpenCreate} user={user}/> : <></>
+        <AddAvatarModal openCreate={openCreate} setOpenCreate={setOpenCreate} user={user} refresh={refresh} setRefresh={setRefresh}/> : <></>
       }
+      <UserRollcallPostsContainer user={user} />
     </div>
     );
 }
-
-/*
-<div>
-                <label htmlFor="avatar" className="sr-only">
-                  Avatar
-                </label>
-                <input
-                  id="avatar"
-                  name="avatar"
-                  type="file"
-                  autoComplete="avatar"
-                  required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Avatar"
-                  onChange={(e) => setAvatar(e.target.files[0])}
-                />
-              </div>
-*/
-
-// avatar click setOpenCreate
