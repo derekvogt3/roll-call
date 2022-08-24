@@ -44,16 +44,16 @@ function App() {
   const [user, setUser] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const [refresh, setRefresh] = useState(false)
 
   useEffect(() => {
     fetch("/me").then((r) => {
       setLoaded(true);
       if (r.ok) {
-        console.log("ME DATA: ", r);
         r.json().then((data) => setUser(data));
       }
     });
-  }, []);
+  }, [refresh]);
 
   if (!loaded) return <></>;
 
@@ -244,7 +244,7 @@ function App() {
           </div>
 
           <Routes>
-            <Route path="/" element={<Home />} />
+            <Route path="/" element={<Home user={user} />} />
             <Route path="groups" element={<Groups />}></Route>
             <Route path="groups/:groupId" element={<GroupFocus />} />
             <Route path="notifications" element={<Notifications />} />
@@ -252,7 +252,7 @@ function App() {
             <Route path="chats" element={<Chats />} />
             <Route
               path="profile"
-              element={<Profile setUser={setUser} user={user} />}
+              element={<Profile setUser={setUser} user={user} refresh={refresh} setRefresh={setRefresh} />}
             />
             <Route path="/login" element={<Login setUser={setUser} />} />
           </Routes>

@@ -4,7 +4,7 @@ import { Fragment } from "react";
 import { XIcon } from "@heroicons/react/outline";
 import { Dialog } from "@headlessui/react";
 
-export default function AddAvatarModal({ openCreate, setOpenCreate,user }){
+export default function AddAvatarModal({ openCreate, setOpenCreate,user, refresh, setRefresh }){
 
     const [avatar, setAvatar] = useState("")
 
@@ -17,6 +17,11 @@ export default function AddAvatarModal({ openCreate, setOpenCreate,user }){
             body: formData,
         })
         .then((r) => r.json())
+        .then(() => {
+            setAvatar("")
+            setRefresh(!refresh)
+            setOpenCreate(false)
+        })
     };
 
     function postPage(){

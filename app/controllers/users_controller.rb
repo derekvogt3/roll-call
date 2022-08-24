@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     def show 
         render json: @current_user
     end
-
+    
     def create
         user = User.create!(user_params)
         session[:user_id] = user.id
@@ -26,7 +26,7 @@ class UsersController < ApplicationController
     end
 
     def addAvatar
-        render json: @current_user.update!(avatar: params[:avatar])
+        render json: @current_user.update_attribute(:avatar, params[:avatar])
     end
     
     private

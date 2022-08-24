@@ -14,6 +14,9 @@ class User < ApplicationRecord
     has_secure_password
     has_one_attached :avatar
 
+    # Adds notification functionality via noticed gem
+    has_many :notifications, as: :recipient
+
     validates :username, :email, :password, presence: true
     validates :email,:username, uniqueness: true
 
