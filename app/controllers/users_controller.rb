@@ -24,6 +24,10 @@ class UsersController < ApplicationController
         @current_user.destroy
         head :no_content
     end
+
+    def addAvatar
+        render json: @current_user.update!(avatar:, params[:avatar])
+    end
     
     private
 

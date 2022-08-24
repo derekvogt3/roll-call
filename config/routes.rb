@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   resources :roll_call_posts, only: [:index, :show, :create, :destroy]
   resources :groups
   resources :user_groups
-  resources :users, only: [:show, :create, :update, :destroy,:index]
+  resources :users
 
   # Login user
   post "/login", to: "session#create"
@@ -19,6 +19,9 @@ Rails.application.routes.draw do
 
   # root "articles#index"
   get '/hello', to: 'application#hello_world'
+
+  # Add/change user's avatar
+  patch "/users/avatar/:id", to: "users#addAvatar"
 
   # added to direct routes to react if they aren't associated with an api
   get '*path',
