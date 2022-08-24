@@ -3,6 +3,7 @@ class CreateUserGroups < ActiveRecord::Migration[7.0]
     create_table :user_groups do |t|
       t.integer :user_id
       t.integer :group_id
+      t.string :status
 
       t.timestamps
     end

@@ -3,103 +3,22 @@ import { Link, Outlet } from "react-router-dom";
 import CreateGroupModal from "../page_components/groups/CreateGroupModal";
 import { useState, useEffect } from "react";
 
-const groups = [
-  {
-    id: 1,
-    title: "Super Fun Group",
-    department: "5 members",
-    closeDate: "2020-01-07",
-    closeDateFull: "January 7, 2020",
-    applicants: [
-      {
-        name: "Dries Vincent",
-        email: "dries.vincent@example.com",
-        imageUrl:
-          "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-      },
-      {
-        name: "Lindsay Walton",
-        email: "lindsay.walton@example.com",
-        imageUrl:
-          "https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-      },
-      {
-        name: "Courtney Henry",
-        email: "courtney.henry@example.com",
-        imageUrl:
-          "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-      },
-      {
-        name: "Tom Cook",
-        email: "tom.cook@example.com",
-        imageUrl:
-          "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-      },
-    ],
-  },
-  {
-    id: 2,
-    title: "Bad boys of Javascript",
-    department: "18 memebers",
-    closeDate: "2020-01-07",
-    closeDateFull: "January 7, 2020",
-    applicants: [
-      {
-        name: "Whitney Francis",
-        email: "whitney.francis@example.com",
-        imageUrl:
-          "https://images.unsplash.com/photo-1517365830460-955ce3ccd263?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-      },
-      {
-        name: "Leonard Krasner",
-        email: "leonard.krasner@example.com",
-        imageUrl:
-          "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-      },
-      {
-        name: "Floyd Miles",
-        email: "floy.dmiles@example.com",
-        imageUrl:
-          "https://images.unsplash.com/photo-1463453091185-61582044d556?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-      },
-    ],
-  },
-  {
-    id: 3,
-    title: "Flatiron School",
-    department: "100 members",
-    closeDate: "2020-01-14",
-    closeDateFull: "January 14, 2020",
-    applicants: [
-      {
-        name: "Emily Selman",
-        email: "emily.selman@example.com",
-        imageUrl:
-          "https://images.unsplash.com/photo-1502685104226-ee32379fefbe?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-      },
-      {
-        name: "Kristin Watson",
-        email: "kristin.watson@example.com",
-        imageUrl:
-          "https://images.unsplash.com/photo-1500917293891-ef795e70e1f6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-      },
-      {
-        name: "Emma Dorsey",
-        email: "emma.dorsey@example.com",
-        imageUrl:
-          "https://images.unsplash.com/photo-1505840717430-882ce147ef2d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-      },
-    ],
-  },
-];
-
 export default function Groups() {
   const [openCreate, setOpenCreate] = useState(false);
+  const [groups, setGroups] = useState([]);
   useEffect(() => {
     fetch("/groups")
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        console.log(data);
+        setGroups(data);
+      });
   }, []);
+
+  const groupstoInclude = groups.map((group) => {
+    return <GroupSummary group={group} />;
+  });
+
   return (
     <div className="p-2">
       <div className="pb-5 border-b border-gray-200 flex items-center justify-between">
@@ -117,13 +36,38 @@ export default function Groups() {
         </div>
       </div>
 
-      <div className="bg-white shadow overflow-hidden sm:rounded-md">
-        <ul role="list" className="divide-y divide-gray-200">
-          {groups.map((group) => (
-            <GroupSummary group={group} />
-          ))}
-        </ul>
-      </div>
+      {groups.length === 0 ? (
+        <div className="text-center">
+          <svg
+            className="mx-auto h-12 w-12 text-gray-400"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 48 48"
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M34 40h10v-4a6 6 0 00-10.712-3.714M34 40H14m20 0v-4a9.971 9.971 0 00-.712-3.714M14 40H4v-4a6 6 0 0110.713-3.714M14 40v-4c0-1.313.253-2.566.713-3.714m0 0A10.003 10.003 0 0124 26c4.21 0 7.813 2.602 9.288 6.286M30 14a6 6 0 11-12 0 6 6 0 0112 0zm12 6a4 4 0 11-8 0 4 4 0 018 0zm-28 0a4 4 0 11-8 0 4 4 0 018 0z"
+            />
+          </svg>
+          <h2 className="mt-2 text-lg font-medium text-gray-900">
+            You do not belong to any groups
+          </h2>
+          <p className="mt-1 text-sm text-gray-500">
+            You do not belong to any groups yet, create a group or accept an
+            invitation to see group details
+          </p>
+        </div>
+      ) : (
+        <div className="bg-white shadow overflow-hidden sm:rounded-md">
+          <ul role="list" className="divide-y divide-gray-200">
+            {groupstoInclude}
+          </ul>
+        </div>
+      )}
+
       <Outlet />
       <CreateGroupModal openCreate={openCreate} setOpenCreate={setOpenCreate} />
     </div>

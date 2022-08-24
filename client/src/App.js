@@ -46,23 +46,18 @@ function App() {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-
-    fetch('/me')
-    .then((r) => {
-      setLoaded(true)
+    fetch("/me").then((r) => {
+      setLoaded(true);
       if (r.ok) {
         console.log("ME DATA: ", r);
-        r.json().then((data) => setUser(data))
-
+        r.json().then((data) => setUser(data));
       }
     });
   }, []);
 
+  if (!loaded) return <></>;
 
-  if(!loaded) return <></>;
-
-  if(!user) return <Login setUser={ setUser } />;
-
+  if (!user) return <Login setUser={setUser} />;
 
   return (
     <>
@@ -251,12 +246,15 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="groups" element={<Groups />}></Route>
-            <Route path="groups/:id" element={<GroupFocus />} />
+            <Route path="groups/:groupId" element={<GroupFocus />} />
             <Route path="notifications" element={<Notifications />} />
             <Route path="history" element={<History />} />
             <Route path="chats" element={<Chats />} />
-            <Route path="profile" element={<Profile setUser={ setUser } user={ user } />} />
-            <Route path="/login" element={<Login setUser={ setUser } />} />
+            <Route
+              path="profile"
+              element={<Profile setUser={setUser} user={user} />}
+            />
+            <Route path="/login" element={<Login setUser={setUser} />} />
           </Routes>
         </div>
       </div>

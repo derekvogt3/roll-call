@@ -5,7 +5,7 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
-# require 'faker'
+require 'faker'
 # puts "Clearing db..."
 # User.destroy_all
 # Group.destroy_all
@@ -13,11 +13,10 @@
 
 # # create users
 
-# puts "making users"
-# 20.times{User.create!(username:Faker::Internet.username(specifier: 5..10).unique,
-#                     email:Faker::Internet.email.unique,
-#                     avatar:"xx",
-#                     password_digest:"testpass123")}
+puts "making users"
+20.times{User.create!(username:Faker::Internet.username(specifier: 5..10),
+                    email:Faker::Internet.email,
+                    password:"testpass123")}
 
 
 # puts "making groups"

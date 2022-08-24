@@ -27,6 +27,7 @@ export default function CreateGroupModal({ openCreate, setOpenCreate }) {
     })
       .then((res) => res.json())
       .then((data) => {
+        console.log(data);
         setGroup(data);
         setNav(1);
       });

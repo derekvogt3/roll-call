@@ -17,6 +17,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_21_211506) do
   create_table "a_roll_calls", force: :cascade do |t|
     t.integer "admin"
     t.integer "group_id"
+    t.datetime "end_time"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -85,6 +86,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_21_211506) do
   create_table "user_groups", force: :cascade do |t|
     t.integer "user_id"
     t.integer "group_id"
+    t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

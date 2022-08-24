@@ -30,7 +30,7 @@ class UserGroupsController < ApplicationController
     end
 
     def user_group_params
-        params.permit(:user_id, :group_id)
+        params.permit(:user_id, :group_id,:status)
     end
     
 end

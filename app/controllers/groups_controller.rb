@@ -13,7 +13,7 @@ class GroupsController < ApplicationController
 
     def create
         group = Group.create!(name:params[:name],admin: session[:user_id])
-        UserGroup.create!(group_id:group.id,user_id:session[:user_id])
+        UserGroup.create!(group_id:group.id,user_id:session[:user_id],status:"accepted")
         render json: group, status: :created
     end
 

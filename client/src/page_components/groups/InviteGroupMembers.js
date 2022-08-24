@@ -19,6 +19,7 @@ export default function InviteGroupMembers({ group }) {
     const obj = {
       group_id: group.id,
       user_id: id,
+      status: "invited",
     };
     fetch("/user_groups", {
       method: "POST",
@@ -40,11 +41,23 @@ export default function InviteGroupMembers({ group }) {
     >
       <div className="min-w-0 flex-1 flex items-center space-x-3">
         <div className="flex-shrink-0">
-          <img
-            className="h-10 w-10 rounded-full"
-            src={person.avatar_url}
-            alt=""
-          />
+          {person.avatar_url ? (
+            <img
+              className="h-10 w-10 rounded-full"
+              src={person.avatar_url}
+              alt=""
+            />
+          ) : (
+            <span className="inline-block h-10 w-10 rounded-full overflow-hidden bg-gray-100">
+              <svg
+                className="h-full w-full text-gray-300"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+              </svg>
+            </span>
+          )}
         </div>
         <div className="min-w-0 flex-1">
           <p className="text-sm font-medium text-gray-900 truncate">
@@ -53,25 +66,21 @@ export default function InviteGroupMembers({ group }) {
         </div>
       </div>
       <div className="flex-shrink-0">
-        <button
-          type="button"
-          className="inline-flex items-center py-2 px-3 border border-transparent rounded-full bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        >
-          <PlusSmIcon
-            className="-ml-1 mr-0.5 h-5 w-5 text-gray-400"
-            aria-hidden="true"
-          />
-          {addedPeople.includes(person.id) ? (
-            <span className="text-sm font-medium text-gray-900">Added</span>
-          ) : (
-            <span
-              className="text-sm font-medium text-gray-900"
-              onClick={() => handleAdd(person.id)}
-            >
-              Add
-            </span>
-          )}
-        </button>
+        {addedPeople.includes(person.id) ? (
+          <span className="text-sm font-medium text-gray-900">Added</span>
+        ) : (
+          <button
+            type="button"
+            className="inline-flex items-center py-2 px-3 border border-transparent rounded-full bg-gray-100 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            onClick={() => handleAdd(person.id)}
+          >
+            <PlusSmIcon
+              className="-ml-1 mr-0.5 h-5 w-5 text-gray-400"
+              aria-hidden="true"
+            />
+            <span className="text-sm font-medium text-gray-900">Add</span>
+          </button>
+        )}
       </div>
     </li>
   ));

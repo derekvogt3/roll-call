@@ -6,6 +6,8 @@ import RollCallsGroup from "./RollCallsGroup";
 import Members from "./Members";
 import Settings from "./Settings";
 import GroupChat from "./GroupChat";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 const tabs = [
   { name: "Roll Cals", nav: 0 },
@@ -15,13 +17,21 @@ const tabs = [
 ];
 
 export default function GroupFocus() {
+  let { groupId } = useParams();
   const [pageNav, setPageNav] = useState(0);
+  const [group, setGroup] = useState({});
+
+  useEffect(() => {
+    fetch("/groups/" + groupId)
+      .then((res) => res.json())
+      .then((data) => setGroup(data));
+  }, []);
 
   function shownPage() {
     if (pageNav === 0) {
       return <RollCallsGroup />;
     } else if (pageNav === 1) {
-      return <Members />;
+      return <Members group={group} />;
     } else if (pageNav === 2) {
       return <GroupChat />;
     } else if (pageNav === 3) {
