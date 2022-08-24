@@ -50,7 +50,10 @@ export default function GroupSummary({ group }) {
                     );
                   } else {
                     return (
-                      <span className="inline-block h-6 w-6 rounded-full overflow-hidden bg-gray-100">
+                      <span
+                        key={user.id}
+                        className="inline-block h-6 w-6 rounded-full overflow-hidden bg-gray-100"
+                      >
                         <svg
                           className="h-full w-full text-gray-300"
                           fill="currentColor"

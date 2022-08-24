@@ -6,7 +6,7 @@ import useSupercluster from "use-supercluster";
 
 import ImageMarker from "./ImageMarker";
 
-export default function PictureMap({ images, mapWidth, mapHeight }) {
+export default function PictureMap({ posts, mapWidth, mapHeight }) {
   const mapRef = useRef();
   const [bounds, setBounds] = useState(null);
   const [dynamicZoom, setDynamicZoom] = useState(10);
@@ -16,32 +16,32 @@ export default function PictureMap({ images, mapWidth, mapHeight }) {
     height: window.innerHeight * 0.3, // Map height in pixels
   };
 
-  function getMinMax(images) {
+  function getMinMax(posts) {
     const bounds = {
       ne: {
-        lat: Math.max(...images.map((image) => image.lat)),
-        lng: Math.max(...images.map((image) => image.lng)),
+        lat: Math.max(...posts.map((post) => post.lat)),
+        lng: Math.max(...posts.map((post) => post.lng)),
       },
       sw: {
-        lat: Math.min(...images.map((image) => image.lat)),
-        lng: Math.min(...images.map((image) => image.lng)),
+        lat: Math.min(...posts.map((post) => post.lat)),
+        lng: Math.min(...posts.map((post) => post.lng)),
       },
     };
 
     return bounds;
   }
 
-  const points = images.map((image) => ({
+  const points = posts.map((post) => ({
     type: "Feature",
     properties: {
-      img: image.img,
+      img: post.img,
       caption: "this is a test",
-      id: image.id,
+      id: post.id,
     },
-    geometry: { type: "Point", coordinates: [image.lng, image.lat] },
+    geometry: { type: "Point", coordinates: [post.lng, post.lat] },
   }));
 
-  const defaultBounds = getMinMax(images);
+  const defaultBounds = getMinMax(posts);
 
   const { center, zoom } = fitBounds(defaultBounds, size);
 

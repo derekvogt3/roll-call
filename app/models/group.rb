@@ -1,10 +1,10 @@
 class Group < ApplicationRecord
 
-    has_many :userGroups, dependent: :destroy
-    has_many :users, through: :userGroups
+    has_many :user_groups, dependent: :destroy
+    has_many :users, through: :user_groups
 
-    has_many :aRollCalls, dependent: :destroy
-    has_many :rollCallPosts, through: :aRollCalls
+    has_many :a_roll_calls, dependent: :destroy
+    has_many :roll_call_posts, through: :a_roll_calls
 
     has_one :chat, dependent: :destroy
     has_many :messages, through: :chat

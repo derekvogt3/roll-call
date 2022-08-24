@@ -26,7 +26,7 @@ class UsersController < ApplicationController
     end
 
     def addAvatar
-        render json: @current_user.update!(avatar:, params[:avatar])
+        render json: @current_user.update!(avatar: params[:avatar])
     end
     
     private

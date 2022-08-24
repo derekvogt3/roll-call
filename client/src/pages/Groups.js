@@ -10,13 +10,12 @@ export default function Groups() {
     fetch("/groups")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setGroups(data);
       });
   }, []);
 
   const groupstoInclude = groups.map((group) => {
-    return <GroupSummary group={group} />;
+    return <GroupSummary key={group.id} group={group} />;
   });
 
   return (

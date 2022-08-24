@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import PictureMap from "../../common/PictureMap";
-import UploadPost from "../../common/UploadPost";
+import PictureMap from "./PictureMap";
+import UploadPost from "./UploadPost";
+import EmptyMap from "./EmptyMap";
 
 import { PlusCircleIcon, CalendarIcon } from "@heroicons/react/outline";
 
@@ -44,36 +45,56 @@ const images = [
   },
 ];
 
-export default function RollCallHome() {
+export default function RollCallHome({ rollCall }) {
   const [openPost, setOpenPost] = useState(false);
 
   return (
     <>
       <div className="bg-white shadow overflow-hidden sm:rounded-md flex flex-col mt-4 p-2">
-        <div className="hidden lg:flex lg:flex-shrink-0">test</div>
         <div className="flex items-center text-sm text-gray-500">
           <CalendarIcon
             className="flex-shrink-0 mr-1.5 h-5 w-5 text-gray-400"
             aria-hidden="true"
           />
           <p>
-            <time dateTime={"2020-01-07"}>January 7, 2020</time>
+            <time>{rollCall.created_at}</time>
           </p>
         </div>
         <div className="flex flex-col lg:flex-row-reverse justify-items-stretch ">
-          <div className="hidden lg:flex">
-            <PictureMap images={images} mapWidth={"50vw"} mapHeight={"50vh"} />
-          </div>
-          <div className="flex lg:hidden">
-            <PictureMap images={images} mapWidth={"90vw"} mapHeight={"50vh"} />
-          </div>
+          {/* couldnt figure out how to render an empty picturemap with all of the clustering and stuff so made an empty map state */}
+          {rollCall.roll_call_posts.length === 0 ? (
+            <div className="hidden lg:flex">
+              <EmptyMap mapWidth={"50vw"} mapHeight={"50vh"} />
+            </div>
+          ) : (
+            <div className="hidden lg:flex">
+              <PictureMap
+                posts={rollCall.roll_call_posts}
+                mapWidth={"50vw"}
+                mapHeight={"50vh"}
+              />
+            </div>
+          )}
+          {rollCall.roll_call_posts.length === 0 ? (
+            <div className="flex lg:hidden">
+              <EmptyMap mapWidth={"90vw"} mapHeight={"50vh"} />
+            </div>
+          ) : (
+            <div className="flex lg:hidden">
+              <PictureMap
+                posts={rollCall.roll_call_posts}
+                mapWidth={"90vw"}
+                mapHeight={"50vh"}
+              />
+            </div>
+          )}
           <div className="flex flex-col items-start">
             <p className="font-medium text-indigo-600 truncate">
-              Super fun group
+              {rollCall.group.name}
             </p>
             <p>
-              Derek initiated a Roll-Call, submit a post to add a photo to the
-              map!
+              You have a roll call due by {rollCall.end_time}, submit a post to
+              add a photo to the map!
             </p>
 
             <button
@@ -90,7 +111,11 @@ export default function RollCallHome() {
           </div>
         </div>
       </div>
-      <UploadPost openPost={openPost} setOpenPost={setOpenPost} />
+      <UploadPost
+        rollCall={rollCall}
+        openPost={openPost}
+        setOpenPost={setOpenPost}
+      />
     </>
   );
 }

@@ -73,10 +73,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_08_21_211506) do
   end
 
   create_table "roll_call_posts", force: :cascade do |t|
-    t.integer "roll_call_id"
+    t.integer "a_roll_call_id"
     t.integer "user_id"
     t.string "photo"
-    t.float "long"
+    t.float "lng"
     t.float "lat"
     t.string "comment"
     t.datetime "created_at", null: false

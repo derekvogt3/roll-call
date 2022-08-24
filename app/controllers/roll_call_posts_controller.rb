@@ -1,6 +1,6 @@
 class RollCallPostsController < ApplicationController
 
-    before_action :set_roll_call_post, only[:show, :destroy]
+    before_action :set_roll_call_post, only:[:show, :destroy]
     
     def index
         render json: RollCallPost.all
@@ -11,11 +11,9 @@ class RollCallPostsController < ApplicationController
     end
 
     def create
-        # rollCall = RollCallPost.create!(params[:roll_call_id, :user_id, :location, :comment])
-        # rollCall.photo.attach(params[:photo])
-        # render json: rollCall, status: :created
         
-        render json: RollCallPost.create!(roll_call_post_params), status: :created
+        new_roll_call = RollCallPost.create!(a_roll_call_id:params[:a_roll_call_id], photo:params[:photo], lat:params[:lat],lng:params[:lng], comment:params[:comment],user_id:session[:user_id])
+        render json: new_roll_call, status: :created
     end
 
     def destroy
@@ -30,7 +28,11 @@ class RollCallPostsController < ApplicationController
     end
 
     def roll_call_post_params
-        params.permit(:roll_call_id, :user_id, :photo, :location, :comment)
+        params.permit(:a_roll_call_id, :user_id, :photo, :lat,:lng, :comment)
+    end
+    
+    def roll_call_post_params_no_user
+        params.permit(:a_roll_call_id, :photo, :lat,:lng, :comment)
     end
 
 end

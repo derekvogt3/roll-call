@@ -11,7 +11,7 @@ class ARollCallsController < ApplicationController
   end  
   
   def create
-    render json: ARollCall.create!(roll_call_params), status: :created
+    render json: ARollCall.create!(admin:session[:user_id],group_id:params[:group_id],end_time:params[:end_time]), status: :created
   end
 
   def update

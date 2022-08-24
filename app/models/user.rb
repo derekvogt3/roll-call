@@ -6,8 +6,8 @@ class User < ApplicationRecord
     has_many :messages, dependent: :destroy
     has_many :chats, through: :messages
 
-    has_many :rollCallPosts, dependent: :destroy
-    has_many :aRollCalls, through: :groups
+    has_many :roll_call_posts, dependent: :destroy
+    has_many :a_roll_calls, through: :groups
 
     # Hash & salts passwords
     # Links to password_digest column

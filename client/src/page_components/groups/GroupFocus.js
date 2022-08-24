@@ -2,12 +2,12 @@ import { UserGroupIcon } from "@heroicons/react/solid";
 import Member from "./Member";
 import Tabs from "./Tabs";
 import { useState } from "react";
-import RollCallsGroup from "./RollCallsGroup";
 import Members from "./Members";
 import Settings from "./Settings";
 import GroupChat from "./GroupChat";
 import { useParams } from "react-router-dom";
 import { useEffect } from "react";
+import RollCallsGroup from "./rollcalls/RollCallsGroup";
 
 const tabs = [
   { name: "Roll Cals", nav: 0 },
@@ -24,18 +24,22 @@ export default function GroupFocus() {
   useEffect(() => {
     fetch("/groups/" + groupId)
       .then((res) => res.json())
-      .then((data) => setGroup(data));
+      .then((data) => {
+        console.log("here");
+        console.log(data);
+        setGroup(data);
+      });
   }, []);
 
   function shownPage() {
     if (pageNav === 0) {
-      return <RollCallsGroup />;
+      return <RollCallsGroup group={group} />;
     } else if (pageNav === 1) {
       return <Members group={group} />;
     } else if (pageNav === 2) {
-      return <GroupChat />;
+      return <GroupChat group={group} />;
     } else if (pageNav === 3) {
-      return <Settings />;
+      return <Settings group={group} />;
     }
   }
 

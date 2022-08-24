@@ -6,16 +6,61 @@ import Camera from "react-html5-camera-photo";
 import "react-html5-camera-photo/build/css/index.css";
 import SimpleMap from "./SimpleMap";
 
-export default function UploadPost({ openPost, setOpenPost }) {
+export default function UploadPost({ rollCall, openPost, setOpenPost }) {
   const [dataUri, setDataUri] = useState("");
   const [pageNav, setPageNav] = useState(1);
   const [showLocationSpinner, setShowLocationSpinner] = useState(true);
   const [lat, setLat] = useState(0);
   const [lng, setLng] = useState(0);
+  const [comment, setComment] = useState("");
 
   function handleTakePhotoAnimationDone(dataUri) {
     setPageNav(2);
     setDataUri(dataUri);
+  }
+  //from stack overflow, the gods wrote this
+  function dataURItoBlob(dataURI) {
+    // convert base64 to raw binary data held in a string
+    // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
+    var byteString = atob(dataURI.split(",")[1]);
+
+    // separate out the mime component
+    var mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
+
+    // write the bytes of the string to an ArrayBuffer
+    var ab = new ArrayBuffer(byteString.length);
+
+    // create a view into the buffer
+    var ia = new Uint8Array(ab);
+
+    // set the bytes of the buffer to the correct values
+    for (var i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+
+    // write the ArrayBuffer to a blob, and you're done
+    var blob = new Blob([ab], { type: mimeString });
+    return blob;
+  }
+
+  function handlePost() {
+    if (lat !== 0) {
+      const formData = new FormData();
+      formData.append("photo", dataURItoBlob(dataUri));
+      formData.append("lng", lng);
+      formData.append("lat", lat);
+      formData.append("comment", "testewlterwktj");
+      formData.append("a_roll_call_id", rollCall.id);
+
+      fetch("/roll_call_posts", {
+        method: "POST",
+        body: formData,
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data));
+    } else {
+      console.log("error no location found");
+    }
   }
 
   const isFullscreen = false;
@@ -118,6 +163,7 @@ export default function UploadPost({ openPost, setOpenPost }) {
             <button
               type="button"
               className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              onClick={() => handlePost()}
             >
               Post
             </button>
