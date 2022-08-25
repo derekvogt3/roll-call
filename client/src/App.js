@@ -50,7 +50,10 @@ function App() {
     fetch("/me").then((r) => {
       setLoaded(true);
       if (r.ok) {
-        r.json().then((data) => setUser(data));
+        r.json().then((data) => {
+          console.log("LOGGED USER: ", data)
+          setUser(data)
+        });
       }
     });
   }, [refresh]);

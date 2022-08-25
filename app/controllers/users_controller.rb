@@ -25,6 +25,10 @@ class UsersController < ApplicationController
         head :no_content
     end
 
+    def userPosts
+        render json: @current_user, serializer: UserShowPostsSerializer
+    end
+
     def addAvatar
         render json: @current_user.update_attribute(:avatar, params[:avatar])
     end
@@ -32,7 +36,7 @@ class UsersController < ApplicationController
     private
 
     def user_params
-        params.permit(:username, :email, :avatar, :password)
+        params.permit(:username, :email, :password)
     end
     
 end
