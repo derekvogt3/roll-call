@@ -1,11 +1,12 @@
 import React from "react";
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
-import { XIcon } from "@heroicons/react/outline";
 import { v4 as uuidv4 } from "uuid";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/solid";
 
 export default function ImageMarker({ postObj }) {
   const [open, setOpen] = useState(false);
+  const [currentPhotoIdx, setCurrentPhotoIdx] = useState(0);
 
   function returnedInput() {
     if (postObj.hasChildren) {
@@ -16,34 +17,43 @@ export default function ImageMarker({ postObj }) {
             src={postObj.children[1].properties.img}
           />
           <div className="bg-white w-14 ring-4 ring-white flex justify-center">
-            {postObj.children.map((child) => {
-              {
-                if (child.properties.user_obj.avatar_url) {
+            {postObj.children.map((child, idx) => {
+              if (idx < 2) {
+                {
+                  if (child.properties.user_obj.avatar_url) {
+                    return (
+                      <img
+                        key={child.properties.id}
+                        className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+                        src={child.properties.user_obj.avatar_url}
+                      />
+                    );
+                  } else {
+                  }
                   return (
-                    <img
-                      key={child.properties.id}
-                      className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-                      src={child.properties.user_obj.avatar_url}
-                    />
-                  );
-                } else {
-                }
-                return (
-                  <span
-                    key={uuidv4()}
-                    className="inline-block h-6 w-6 rounded-full overflow-hidden"
-                  >
-                    <svg
-                      className="h-full w-full text-gray-300"
-                      fill="currentColor"
-                      viewBox="0 0 24 24"
+                    <span
+                      key={uuidv4()}
+                      className="inline-block h-6 w-6 rounded-full overflow-hidden"
                     >
-                      <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                  </span>
-                );
+                      <svg
+                        className="h-full w-full text-gray-300"
+                        fill="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                      </svg>
+                    </span>
+                  );
+                }
+
                 {
                 }
+              } else if (idx === 3) {
+                return (
+                  <span className="absolute -right-6 bottom-20 inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
+                    +{postObj.children.length}
+                  </span>
+                );
               }
             })}
           </div>
@@ -58,10 +68,12 @@ export default function ImageMarker({ postObj }) {
           />
           <div className="bg-white w-14 ring-4 ring-white flex justify-center">
             {postObj.properties.user_obj.avatar_url ? (
-              <img
-                className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-                src={postObj.properties.user_obj.avatar_url}
-              />
+              <>
+                <img
+                  className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+                  src={postObj.properties.user_obj.avatar_url}
+                />
+              </>
             ) : (
               <span className="inline-block h-6 w-6 rounded-full overflow-hidden bg-gray-100">
                 <svg
@@ -119,15 +131,69 @@ export default function ImageMarker({ postObj }) {
               >
                 <Dialog.Panel className="relative bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full">
                   <div className="flex flex-col">
-                    <XIcon className="h-4 w-4 self-end" />
-                    <img
-                      className="ring-2 ring-white object-cover"
-                      src={
-                        postObj.hasChildren
-                          ? postObj.children[0].properties.img
-                          : postObj.properties.img
-                      }
-                    />
+                    {postObj.hasChildren ? (
+                      <>
+                        <img
+                          className="ring-2 ring-white object-cover"
+                          src={postObj.children[currentPhotoIdx].properties.img}
+                        />
+                        <div className="flex w-100 justify-between">
+                          {currentPhotoIdx === 0 ? (
+                            <div></div>
+                          ) : (
+                            <div
+                              onClick={() =>
+                                setCurrentPhotoIdx((idx) => idx - 1)
+                              }
+                            >
+                              <ChevronLeftIcon className="w-14 h-14"></ChevronLeftIcon>
+                            </div>
+                          )}
+
+                          <div className="bg-white w-14 ring-4 ring-white flex justify-center">
+                            {postObj.children[currentPhotoIdx].properties
+                              .user_obj.avatar_url ? (
+                              <>
+                                <img
+                                  className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+                                  src={
+                                    postObj.children[currentPhotoIdx].properties
+                                      .user_obj.avatar_url
+                                  }
+                                />
+                              </>
+                            ) : (
+                              <span className="inline-block h-6 w-6 rounded-full overflow-hidden bg-gray-100">
+                                <svg
+                                  className="h-full w-full text-gray-300"
+                                  fill="currentColor"
+                                  viewBox="0 0 24 24"
+                                >
+                                  <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                                </svg>
+                              </span>
+                            )}
+                          </div>
+
+                          {currentPhotoIdx === postObj.children.length - 1 ? (
+                            <div></div>
+                          ) : (
+                            <div
+                              onClick={() =>
+                                setCurrentPhotoIdx((idx) => idx + 1)
+                              }
+                            >
+                              <ChevronRightIcon className="w-14 h-14"></ChevronRightIcon>
+                            </div>
+                          )}
+                        </div>
+                      </>
+                    ) : (
+                      <img
+                        className="ring-2 ring-white object-cover"
+                        src={postObj.properties.img}
+                      />
+                    )}
                   </div>
                 </Dialog.Panel>
               </Transition.Child>
