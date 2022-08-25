@@ -273,6 +273,8 @@ function App() {
                   notify={notify}
                   setNotify={setNotify}
                   pushNotifications={pushNotifications}
+                  refresh={refresh}
+                  setRefresh={setRefresh}
                 />
               }
             />

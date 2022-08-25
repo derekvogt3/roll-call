@@ -38,7 +38,6 @@ export default function GroupFocus({
   }, []);
 
   function shownPage() {
-    console.log("HIT HIT HIT", pageNav);
     if (pageNav === 0) {
       return (
         <RollCallsGroup
@@ -47,12 +46,12 @@ export default function GroupFocus({
           notify={notify}
           setNotify={setNotify}
           pushNotifications={pushNotifications}
+          refresh={refresh}
+          setRefresh={setRefresh}
         />
       );
     } else if (pageNav === 1) {
       return <Members group={group} />;
-      // } else if (pageNav === 2) {
-      //   return <GroupChat group={group} />;
     } else if (pageNav === 3) {
       return <Settings group={group} />;
     }

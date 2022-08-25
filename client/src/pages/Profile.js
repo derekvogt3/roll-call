@@ -20,6 +20,8 @@ export default function Profile({
 
   const navigate = useNavigate();
 
+  console.log("OUTTER USER BIO: ", user.bio);
+
   useEffect(() => {
     fetch(`posts/user/${user.id}`).then((r) => {
       setLoaded(false);
@@ -46,6 +48,7 @@ export default function Profile({
             className="w-40 h-40 rounded-full"
             src={user.avatar_url}
             alt={"user's avatar!"}
+            onClick={() => setOpenCreate(!openCreate)}
           />
         ) : (
           <div onClick={() => setOpenCreate(!openCreate)}>
@@ -64,7 +67,7 @@ export default function Profile({
       <br />
       {notify.forEach((alert) => pushNotifications)}
       <ToastContainer />
-
+      {user.bio ? <p>{user.bio}</p> : <h5>Add a bio and let people know a bit about you!</h5>}
       <br />
       <button
         type="submit"

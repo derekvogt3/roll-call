@@ -4,61 +4,103 @@ import { Fragment } from "react";
 import { XIcon } from "@heroicons/react/outline";
 import { Dialog } from "@headlessui/react";
 
-export default function AddAvatarModal({ openCreate, setOpenCreate,user, refresh, setRefresh }){
+export default function AddAvatarModal({ openCreate, setOpenCreate, user, refresh, setRefresh }){
 
     const [avatar, setAvatar] = useState("")
+    const [bio, setBio] = useState("")
 
     const formData = new FormData()
-    formData.append("avatar", avatar)
 
     function handleAddAvatr(){
-        fetch(`/users/avatar/${user.id}`, {
-            method: "PATCH",
-            body: formData,
-        })
-        .then((r) => r.json())
-        .then(() => {
-            setAvatar("")
-            setRefresh(!refresh)
-            setOpenCreate(false)
-        })
-    };
 
+        formData.append("avatar", avatar)
+
+        if(user.bio === ""){
+            console.log("USER BIO EMPTY ", user.bio);
+            formData.delete("bio")
+            fetch(`/users/avatar/${user.id}`, {
+                method: "PATCH",
+                body: formData,
+            })
+            .then((r) => r.json())
+            .then(() => {
+                setAvatar("")
+                setRefresh(!refresh)
+                setOpenCreate(false)
+            })
+        }else{
+            formData.append("bio", bio)
+            fetch(`/users/avatar/${user.id}`, {
+                method: "PATCH",
+                body: formData,
+            })
+            .then((r) => r.json())
+            .then(() => {
+                setAvatar("")
+                setRefresh(!refresh)
+                setOpenCreate(false)
+                console.log("ELSE -- USER: ", user);
+                console.log("ELSE -- USER BIO: ", user.bio);
+            })
+        }
+    };
+    
     function postPage(){
         return(
             <div className="p-4 flex flex-col">
-            <div>
-            <label
-                htmlFor="name"
-                className="ml-px pl-4 block text-sm font-medium text-gray-700"
-            >
-                Upload Avatar
-            </label>
-            <div className="mt-1">
-            <input
-                id="avatar"
-                name="avatar"
-                type="file"
-                autoComplete="avatar"
-                required
-                className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Avatar"
-                onChange={(e) => setAvatar(e.target.files[0])}
-            />
+                <div>
+                    <label
+                        htmlFor="name"
+                        className="ml-px pl-4 block text-sm font-medium text-gray-700"
+                    >
+                        Upload Avatar
+                    </label>
+                    <div className="mt-1">
+                        <input
+                            id="avatar"
+                            name="avatar"
+                            type="file"
+                            autoComplete="avatar"
+                            required
+                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                            placeholder="Avatar"
+                            onChange={(e) => setAvatar(e.target.files[0])}
+                        />
+                    </div>
+                </div>
+                <div>
+                    <label
+                        htmlFor="name"
+                        className="ml-px pl-4 block text-sm font-medium text-gray-700"
+                    >
+                        Add a bio!
+                    </label>
+                    <div className="mt-1">
+                        <input
+                            id="bio"
+                            name="bio"
+                            type="text"
+                            autoComplete="bio"
+                            required
+                            className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                            placeholder="Add your bio here"
+                            value={bio}
+                            onChange={(e) => setBio(e.target.value)}
+                        />
+                    </div>
+                </div>
+                <div className="p-2">
+                    <button
+                        type="button"
+                        className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        onClick={() => {
+                        handleAddAvatr();
+                        }}
+                    >
+                        Add Avatar
+                    </button>
+                </div>
             </div>
-            </div>
-            <div className="p-2">
-            <button
-                type="button"
-                className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                onClick={() => {
-                handleAddAvatr();
-                }}
-            >
-                Add Avatar
-            </button>
-            </div>
-        </div>
         )
     };
     

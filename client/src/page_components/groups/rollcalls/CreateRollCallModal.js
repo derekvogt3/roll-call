@@ -43,12 +43,9 @@ export default function CreateRollCallModal({
       console.log("FILTERED ROLLCALL: ", data)
       setNotify(data)
       pushNotifications()
-      shownPage()
-      console.log("FRESH FRESH FRESH:", refresh);
       setRefresh(!refresh)
-      console.log("REFRESHED:", refresh);
     })
-  }
+  };
 
   return (
     <Transition.Root show={openCreate} as={Fragment}>
