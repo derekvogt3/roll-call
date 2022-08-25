@@ -16,7 +16,7 @@ const tabs = [
   { name: "Settings", nav: 3 },
 ];
 
-export default function GroupFocus() {
+export default function GroupFocus({ notify, setNotify, pushNotifications }) {
   let { groupId } = useParams();
   const [pageNav, setPageNav] = useState(0);
   const [group, setGroup] = useState({});
@@ -33,7 +33,7 @@ export default function GroupFocus() {
 
   function shownPage() {
     if (pageNav === 0) {
-      return <RollCallsGroup group={group} loadingGroups={loadingGroups} />;
+      return <RollCallsGroup group={group} loadingGroups={loadingGroups} notify={notify} setNotify={setNotify} pushNotifications={pushNotifications} />;
     } else if (pageNav === 1) {
       return <Members group={group} />;
       // } else if (pageNav === 2) {

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
 import AddAvatarModal from "../page_components/profile/AddAvatarModal";
 import UserRollcallPostsContainer from "../page_components/profile/UserRollcallPostsCotainer";
+import { ToastContainer, toast } from "react-toastify";
 
 import 'react-toastify/dist/ReactToastify.css';
 
-export default function Profile({ user, setUser, refresh, setRefresh }) {
+export default function Profile({ user, setUser, refresh, setRefresh, pushNotifications, notify }) {
 
   const [openCreate, setOpenCreate] = useState(false);
   const [userWithPosts, setUserWithPosts] = useState({});
@@ -15,38 +15,15 @@ export default function Profile({ user, setUser, refresh, setRefresh }) {
 
   const navigate = useNavigate();
 
-  {/*
-  const notify = () =>
-    toast.info(`${user.username} sent you a new rollcall!`, {
-      position: "top-left",
-      autoClose: false,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-    });
-
-    <div>
-      <button
-        style={{background: "red"}} 
-        onClick={notify}
-      >
-        Notification Button Test
-      </button>
-      <ToastContainer />
-    </div>
-  */}
-
   useEffect(() => {
-    fetch(`/user/groups`).then((r) => {
+    fetch(`posts/user/${user.id}`).then((r) => {
       setLoaded(false);
       if (r.ok) {
         setLoaded(true);
         r.json().then((data) => {
           console.log("'/ME' USER: ", user)
           console.log("USER POSTS: ", data)
-          //setUserWithPosts(data)
+          setUserWithPosts(data)
         });
       }
     });
@@ -73,32 +50,6 @@ export default function Profile({ user, setUser, refresh, setRefresh }) {
     navigate("/login")
   };
 
-  function notification(){
-
-    
-
-    
-    if(groups.map(user)
-    
-    .filter((user) => user.includes(user))){
-      
-      
-      
-      
-      
-      
-      toast.info(`${user.username} sent you a new rollcall!`, {
-        position: "top-left",
-        autoClose: false,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: true,
-        progress: undefined,
-      });
-    }
-  };
-
   return ( 
     <div className="basis-1/4 flex items-center flex-col justify-center py-12 px-4 sm:px-6 lg:px-80">
       <h1>WELCOME {user.username.toUpperCase()}!</h1>
@@ -115,8 +66,8 @@ export default function Profile({ user, setUser, refresh, setRefresh }) {
           </div>
         }
       </div>
-      <br/>
-      {}
+      <br/>      
+      {notify.forEach((alert) => pushNotifications)}
       <ToastContainer />
       <p>Lorem ipsum dolor sit amet. Quo corporis fugiat aut sapiente dolor a nemo asperiores eum ipsam omnis nam fuga corrupti et minus excepturi. Sed sint ipsum ut asperiores debitis et dolores sunt qui tempore odio.</p>
       <br/>

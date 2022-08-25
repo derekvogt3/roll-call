@@ -10,8 +10,13 @@ export default function CreateRollCallModal({
   group,
   openCreate,
   setOpenCreate,
+  notify,
+  setNotify,
+  pushNotifications
 }) {
+  
   const [selected, setSelected] = useState({ id: 1, name: "1 Hour", hours: 1 });
+
   function handleStart() {
     var start = new Date();
     start.setHours(start.getHours() + selected.hours);
@@ -29,6 +34,14 @@ export default function CreateRollCallModal({
     })
       .then((res) => res.json())
       .then((data) => console.log(data));
+
+    fetch("/user/groups/posted")
+    .then((r) => r.json())
+    .then((data) => {
+      console.log("FILTERED ROLLCALL: ", data)
+      setNotify(data)
+      pushNotifications()
+    })
   }
 
   return (

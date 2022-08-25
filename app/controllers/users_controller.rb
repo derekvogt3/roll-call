@@ -21,12 +21,16 @@ class UsersController < ApplicationController
     end
     
     def destroy
-        @current_user.destroy
+        @current_user.destroy 
         head :no_content
     end
 
     def hasPosted?
-        hasPosted = current_user.groups.map{|g| g.a_roll_calls.filter{|rc| !rc.roll_call_posts.find_by(user_id: current_user.id)}.to_a}
+        # GET
+        # MAPPED
+        # NESTED ARRS IN ARRS
+        # FLATTEN TO MAKE IT SHALLOW
+        hasPosted = current_user.groups.map{|g| g.a_roll_calls.filter{|rc| !rc.roll_call_posts.find_by(user_id: current_user.id)}}.flatten
         
         render json: hasPosted
     end

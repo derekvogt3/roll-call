@@ -21,6 +21,7 @@ import Chats from "./pages/Chats";
 import Login from "./pages/Login";
 import GroupFocus from "./page_components/groups/GroupFocus";
 import { Link } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
 /*
 const user = {
@@ -43,6 +44,7 @@ const navigation = [
 function App() {
   const [user, setUser] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [notify, setNotify] = useState([]);
   const [loaded, setLoaded] = useState(false);
   const [refresh, setRefresh] = useState(false);
 
@@ -55,6 +57,19 @@ function App() {
       }
     });
   }, [refresh]);
+
+  
+  const pushNotifications = () => {
+      toast.info(`${user.username} you've got a new rollcall!`, {
+      position: "top-left",
+      autoClose: false,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    })
+  };
 
   if (!loaded) return <></>;
 
@@ -122,6 +137,7 @@ function App() {
                         src="https://tailwindui.com/img/logos/workflow-mark.svg?color=indigo&shade=600"
                         alt="Workflow"
                       />
+                      <ToastContainer />
                     </div>
                     <nav aria-label="Sidebar" className="mt-5">
                       <div className="px-2 space-y-1">
@@ -247,18 +263,20 @@ function App() {
           <Routes>
             <Route path="/" element={<Home user={user} />} />
             <Route path="groups" element={<Groups />}></Route>
-            <Route path="groups/:groupId" element={<GroupFocus />} />
+            <Route path="groups/:groupId" element={<GroupFocus notify={notify} setNotify={setNotify} pushNotifications={pushNotifications} />} />
             <Route path="notifications" element={<Notifications />} />
             <Route path="history" element={<History />} />
             {/* <Route path="chats" element={<Chats />} /> */}
             <Route
-              path="profile"
+              path="/profile"
               element={
                 <Profile
                   setUser={setUser}
                   user={user}
                   refresh={refresh}
                   setRefresh={setRefresh}
+                  pushNotifications={pushNotifications}
+                  notify={notify}
                 />
               }
             />
