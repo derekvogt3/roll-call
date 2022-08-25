@@ -16,7 +16,7 @@ const tabs = [
   { name: "Settings", nav: 3 },
 ];
 
-export default function GroupFocus({ notify, setNotify, pushNotifications }) {
+export default function GroupFocus({ notify, setNotify, pushNotifications, refresh, setRefresh }) {
   let { groupId } = useParams();
   const [pageNav, setPageNav] = useState(0);
   const [group, setGroup] = useState({});
@@ -32,8 +32,9 @@ export default function GroupFocus({ notify, setNotify, pushNotifications }) {
   }, []);
 
   function shownPage() {
+    console.log("HIT HIT HIT", pageNav );
     if (pageNav === 0) {
-      return <RollCallsGroup group={group} loadingGroups={loadingGroups} notify={notify} setNotify={setNotify} pushNotifications={pushNotifications} />;
+      return <RollCallsGroup group={group} loadingGroups={loadingGroups} notify={notify} setNotify={setNotify} pushNotifications={pushNotifications} shownPage={shownPage} refresh={refresh} setRefresh={setRefresh}/>;
     } else if (pageNav === 1) {
       return <Members group={group} />;
       // } else if (pageNav === 2) {

@@ -35,7 +35,7 @@ const user = {
 const navigation = [
   { name: "Home", href: "/", icon: HomeIcon },
   { name: "Groups", href: "groups", icon: UserGroupIcon },
-  { name: "Notifications", href: "notifications", icon: BellIcon },
+  // { name: "Notifications", href: "notifications", icon: BellIcon },
   // { name: "History", href: "history", icon: BookOpenIcon },
   // { name: "Chat", href: "chats", icon: ChatAlt2Icon },
   { name: "Profile", href: "profile", icon: UserIcon },
@@ -60,7 +60,7 @@ function App() {
 
   
   const pushNotifications = () => {
-      toast.info(`${user.username} you've got a new rollcall!`, {
+      toast.info(`${user.username.charAt(0).toUpperCase() + user.username.slice(1)} you've got a new rollcall!`, {
       position: "top-left",
       autoClose: false,
       hideProgressBar: false,
@@ -188,7 +188,6 @@ function App() {
             </div>
           </Dialog>
         </Transition.Root>
-
         {/* Static sidebar for desktop */}
         <div className="hidden lg:flex lg:flex-shrink-0">
           <div className="flex flex-col w-20 h-screen">
@@ -263,7 +262,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home user={user} />} />
             <Route path="groups" element={<Groups />}></Route>
-            <Route path="groups/:groupId" element={<GroupFocus notify={notify} setNotify={setNotify} pushNotifications={pushNotifications} />} />
+            <Route path="groups/:groupId" element={<GroupFocus notify={notify} setNotify={setNotify} pushNotifications={pushNotifications} refresh={refresh} setRefresh={setRefresh} />} />
             <Route path="notifications" element={<Notifications />} />
             <Route path="history" element={<History />} />
             {/* <Route path="chats" element={<Chats />} /> */}
