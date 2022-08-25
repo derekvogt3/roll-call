@@ -5,9 +5,10 @@ import EmptyMap from "./EmptyMap";
 
 import { PlusCircleIcon, CalendarIcon } from "@heroicons/react/outline";
 
-export default function RollCallHome({ rollCall }) {
+export default function RollCallHome({ rollCall, groupSummary }) {
   const [openPost, setOpenPost] = useState(false);
-  console.log(rollCall);
+
+  rollCall["group_summary"] = groupSummary;
 
   return (
     <>
@@ -30,7 +31,7 @@ export default function RollCallHome({ rollCall }) {
           ) : (
             <div className="hidden lg:flex">
               <PictureMap
-                posts={rollCall.roll_call_posts}
+                rollCall={rollCall}
                 mapWidth={"50vw"}
                 mapHeight={"50vh"}
               />
@@ -43,7 +44,7 @@ export default function RollCallHome({ rollCall }) {
           ) : (
             <div className="flex lg:hidden">
               <PictureMap
-                posts={rollCall.roll_call_posts}
+                rollCall={rollCall}
                 mapWidth={"90vw"}
                 mapHeight={"50vh"}
               />
@@ -51,7 +52,7 @@ export default function RollCallHome({ rollCall }) {
           )}
           <div className="flex flex-col items-start">
             <p className="font-medium text-indigo-600 truncate">
-              {rollCall.group.name}
+              {groupSummary.name}
             </p>
             <p>
               You have a roll call due by {rollCall.end_time}, submit a post to

@@ -10,7 +10,6 @@ export default function Groups() {
     fetch("/groups")
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
         setGroups(data);
       });
   }, []);

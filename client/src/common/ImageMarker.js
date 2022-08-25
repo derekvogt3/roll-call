@@ -5,28 +5,80 @@ import { XIcon } from "@heroicons/react/outline";
 
 export default function ImageMarker({ postObj }) {
   const [open, setOpen] = useState(false);
+  console.log(postObj);
+
+  function returnedInput() {
+    if (postObj.hasChildren) {
+      return (
+        <>
+          <img
+            className="inline-block h-14 w-14 ring-4 ring-white object-cover"
+            src={postObj.children[0].properties.img}
+          />
+          <div className="bg-white w-14 ring-4 ring-white flex justify-center">
+            {postObj.children.map((child) => {
+              if (child.properties.user_obj.avatar_url) {
+                return (
+                  <img
+                    className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+                    src={child.properties.user_obj.avatar_url}
+                  />
+                );
+              } else {
+                return (
+                  <span className="inline-block h-6 w-6 rounded-full overflow-hidden">
+                    <svg
+                      className="h-full w-full text-gray-300"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                  </span>
+                );
+              }
+            })}
+          </div>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <img
+            className="inline-block h-14 w-14 ring-4 ring-white object-cover"
+            src={postObj.properties.img}
+          />
+          <div className="bg-white w-14 ring-4 ring-white flex justify-center">
+            {postObj.properties.user_obj.avatar_url ? (
+              <img
+                className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+                src={postObj.properties.user_obj.avatar_url}
+              />
+            ) : (
+              <span className="inline-block h-6 w-6 rounded-full overflow-hidden bg-gray-100">
+                <svg
+                  className="h-full w-full text-gray-300"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+              </span>
+            )}
+          </div>
+        </>
+      );
+    }
+  }
 
   return (
     <>
       <div>
         <div
-          className="absolute -left-8 -top-24 flex flex-col items-center cursor-pointer"
+          className="absolute -left-8 -top-24 flex flex-col items-center cursor-pointer "
           onClick={() => setOpen(true)}
         >
-          <img
-            className="inline-block h-14 w-14 ring-4 ring-white object-cover"
-            src={
-              postObj.hasChildren
-                ? postObj.children[0].properties.img
-                : postObj.properties.img
-            }
-          />
-          <div className="bg-white w-14 ring-4 ring-white flex justify-center">
-            <img
-              className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-              src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            />
-          </div>
+          {returnedInput()}
           <div className="w-6 h-4 overflow-hidden">
             <div className="w-4 h-4 bg-white -rotate-45 transform origin-top-left"></div>
           </div>

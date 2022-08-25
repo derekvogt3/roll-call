@@ -4,7 +4,7 @@ class GroupsController < ApplicationController
     
     def index
         groups = User.find(session[:user_id]).groups
-        render json: groups
+        render json: groups, each_serializer: GroupSummarySerializer
     end
 
     def show

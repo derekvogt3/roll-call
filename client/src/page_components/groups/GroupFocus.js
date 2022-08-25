@@ -26,9 +26,8 @@ export default function GroupFocus() {
     fetch("/groups/" + groupId)
       .then((res) => res.json())
       .then((data) => {
-        console.log("here");
-        console.log(data);
         setGroup(data);
+        setloadingGroups(false);
       });
   }, []);
 

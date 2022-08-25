@@ -6,7 +6,7 @@ import useSupercluster from "use-supercluster";
 
 import ImageMarker from "./ImageMarker";
 
-export default function PictureMap({ posts, mapWidth, mapHeight }) {
+export default function PictureMap({ rollCall, mapWidth, mapHeight }) {
   const mapRef = useRef();
   const [bounds, setBounds] = useState(null);
   const [dynamicZoom, setDynamicZoom] = useState(10);
@@ -15,6 +15,11 @@ export default function PictureMap({ posts, mapWidth, mapHeight }) {
     width: window.innerWidth * 0.9, // Map width in pixels
     height: window.innerHeight * 0.3, // Map height in pixels
   };
+
+  const posts = rollCall.roll_call_posts.map((post) => {
+    post["group_summary"] = rollCall.group_summary;
+    return post;
+  });
 
   function getMinMax(posts) {
     const bounds = {
@@ -37,13 +42,17 @@ export default function PictureMap({ posts, mapWidth, mapHeight }) {
       img: post.photo_url,
       caption: post.comment,
       id: post.id,
+      user_obj: post.group_summary.users.find((x) => x.id === post.user_id),
     },
     geometry: { type: "Point", coordinates: [post.lng, post.lat] },
   }));
 
   const defaultBounds = getMinMax(posts);
-
-  const { center, zoom } = fitBounds(defaultBounds, size);
+  //if ther is only 1 post, use the post lat lng as a center, otherwise, use the fitBounds formula to calculate
+  const { center, zoom } =
+    posts.length === 1
+      ? { center: { lat: posts[0].lat, lng: posts[0].lng }, zoom: 11 }
+      : fitBounds(defaultBounds, size);
 
   const { clusters, supercluster } = useSupercluster({
     points,

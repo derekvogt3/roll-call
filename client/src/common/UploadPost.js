@@ -123,7 +123,6 @@ export default function UploadPost({ rollCall, openPost, setOpenPost }) {
                 name="comment"
                 id="comment"
                 className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full border-gray-400 rounded-md"
-                defaultValue=""
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
               />
