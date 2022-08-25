@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 import AddAvatarModal from "../page_components/profile/AddAvatarModal";
 import UserRollcallPostsContainer from "../page_components/profile/UserRollcallPostsCotainer";
 
@@ -9,8 +9,45 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function Profile({ user, setUser, refresh, setRefresh }) {
 
   const [openCreate, setOpenCreate] = useState(false);
+  const [loaded, setLoaded] = useState(false)
 
   const navigate = useNavigate();
+
+  const notify = () =>
+    toast.info(`${user.username} sent you a new rollcall!`, {
+      position: "top-left",
+      autoClose: false,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
+
+  {/*
+    <div>
+      <button
+        style={{background: "red"}} 
+        onClick={notify}
+      >
+        Notification Button Test
+      </button>
+      <ToastContainer />
+    </div>
+  */}
+
+  useEffect(() => {
+    fetch(`posts/user/${user.id}`).then((r) => {
+      setLoaded(false);
+      if (r.ok) {
+        setLoaded(true);
+        r.json().then((data) => {
+          console.log("USER POSTS: ", data)
+          setUser(data)
+        });
+      }
+    });
+  }, []);
   
   function logout(){
     fetch("/logout", { method: "DELETE" })
@@ -35,6 +72,7 @@ export default function Profile({ user, setUser, refresh, setRefresh }) {
         }
       </div>
       <br/>
+      <ToastContainer />
       <p>Lorem ipsum dolor sit amet. Quo corporis fugiat aut sapiente dolor a nemo asperiores eum ipsam omnis nam fuga corrupti et minus excepturi. Sed sint ipsum ut asperiores debitis et dolores sunt qui tempore odio.</p>
       <br/>
       <button 

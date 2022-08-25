@@ -23,6 +23,9 @@ Rails.application.routes.draw do
   # Add/change user's avatar
   patch "/users/avatar/:id", to: "users#addAvatar"
 
+  # Get user & their posts
+  get 'posts/user/:id', to: "users#userPosts"
+
   # added to direct routes to react if they aren't associated with an api
   get '*path',
   to: 'fallback#index',

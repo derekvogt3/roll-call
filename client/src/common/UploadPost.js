@@ -45,8 +45,8 @@ export default function UploadPost({ rollCall, openPost, setOpenPost }) {
 
   function handlePost() {
     if (lat !== 0) {
-      const formData = new FormData();
-      formData.append("photo", dataURItoBlob(dataUri));
+      var formData = new FormData();
+      formData.append("photo", dataUri);
       formData.append("lng", lng);
       formData.append("lat", lat);
       formData.append("comment", "testewlterwktj");

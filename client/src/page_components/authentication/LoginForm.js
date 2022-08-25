@@ -69,7 +69,7 @@ export default function LoginForm({ setUser }) {
           </div>
           {/*<form className="mt-8 space-y-6" action="#" method="POST">*/}
           <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-            <input type="hidden" name="remember" defaultValue="true" />
+            {/*<input type="hidden" name="remember" defaultValue="true" />*/}
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
                 <label htmlFor="username" className="sr-only">
@@ -104,34 +104,6 @@ export default function LoginForm({ setUser }) {
                 />
               </div>
             </div>
-
-            <div className="flex items-center justify-between">
-              <div className="flex items-center">
-                <input
-                  id="remember-me"
-                  name="remember-me"
-                  type="checkbox"
-                  className="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300 rounded"
-                />
-                <label
-                  htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-900"
-                >
-                  Remember me
-                </label>
-              </div>
-              {/* 
-              <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-medium text-indigo-600 hover:text-indigo-500"
-                >
-                  Forgot your password?
-                </a>
-              </div>
-              */}
-            </div>
-
             <div>
               <button
                 type="submit"
