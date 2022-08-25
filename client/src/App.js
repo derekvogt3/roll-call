@@ -47,20 +47,18 @@ function App() {
   const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
+    setLoaded(false);
     fetch("/me").then((r) => {
       setLoaded(true);
       if (r.ok) {
-        r.json().then((data) => {
-          console.log("LOGGED USER: ", data)
-          setUser(data)
-        });
+        r.json().then((data) => setUser(data));
       }
     });
   }, [refresh]);
 
   if (!loaded) return <></>;
 
-  if (!user) return <Login setUser={setUser} />;
+  if (!user) return <Login user={user} setUser={setUser} />;
 
   return (
     <>

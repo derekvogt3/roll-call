@@ -25,6 +25,12 @@ class UsersController < ApplicationController
         head :no_content
     end
 
+    def hasPosted?
+        hasPosted = current_user.groups.map{|g| g.a_roll_calls.filter{|rc| !rc.roll_call_posts.find_by(user_id: current_user.id)}.to_a}
+        
+        render json: hasPosted
+    end
+
     def userPosts
         render json: @current_user, serializer: UserShowPostsSerializer
     end
