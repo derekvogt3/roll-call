@@ -40,13 +40,15 @@ class UsersController < ApplicationController
     end
 
     def addAvatar
-        render json: @current_user.update_attribute(:avatar, params[:avatar])
+            @current_user.update_attribute(:avatar, params[:avatar])
+            @current_user.update_attribute(:bio, params[:bio])
+            render json: @current_user
     end
     
     private
 
     def user_params
-        params.permit(:username, :email, :password)
+        params.permit(:username, :email, :password, :bio)
     end
     
 end
