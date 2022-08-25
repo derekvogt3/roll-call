@@ -18,30 +18,6 @@ export default function UploadPost({ rollCall, openPost, setOpenPost }) {
     setPageNav(2);
     setDataUri(dataUri);
   }
-  //from stack overflow, the gods wrote this
-  function dataURItoBlob(dataURI) {
-    // convert base64 to raw binary data held in a string
-    // doesn't handle URLEncoded DataURIs - see SO answer #6850276 for code that does this
-    var byteString = atob(dataURI.split(",")[1]);
-
-    // separate out the mime component
-    var mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
-
-    // write the bytes of the string to an ArrayBuffer
-    var ab = new ArrayBuffer(byteString.length);
-
-    // create a view into the buffer
-    var ia = new Uint8Array(ab);
-
-    // set the bytes of the buffer to the correct values
-    for (var i = 0; i < byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i);
-    }
-
-    // write the ArrayBuffer to a blob, and you're done
-    var blob = new Blob([ab], { type: mimeString });
-    return blob;
-  }
 
   function handlePost() {
     if (lat !== 0) {
@@ -49,7 +25,7 @@ export default function UploadPost({ rollCall, openPost, setOpenPost }) {
       formData.append("photo", dataUri);
       formData.append("lng", lng);
       formData.append("lat", lat);
-      formData.append("comment", "testewlterwktj");
+      formData.append("comment", comment);
       formData.append("a_roll_call_id", rollCall.id);
 
       fetch("/roll_call_posts", {
@@ -147,7 +123,9 @@ export default function UploadPost({ rollCall, openPost, setOpenPost }) {
                 name="comment"
                 id="comment"
                 className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full border-gray-400 rounded-md"
-                defaultValue={""}
+                defaultValue=""
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
               />
             </div>
           </div>

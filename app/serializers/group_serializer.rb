@@ -4,6 +4,7 @@ class GroupSerializer < ActiveModel::Serializer
   has_many :a_roll_calls
   has_many :users
 
+
   def last_roll_call
     roll_calls = object.a_roll_calls
     if roll_calls.empty?

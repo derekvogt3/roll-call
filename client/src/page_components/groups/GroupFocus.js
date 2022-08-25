@@ -12,7 +12,7 @@ import RollCallsGroup from "./rollcalls/RollCallsGroup";
 const tabs = [
   { name: "Roll Cals", nav: 0 },
   { name: "Members", nav: 1 },
-  { name: "Chat", nav: 2 },
+  // { name: "Chat", nav: 2 },
   { name: "Settings", nav: 3 },
 ];
 
@@ -20,6 +20,7 @@ export default function GroupFocus() {
   let { groupId } = useParams();
   const [pageNav, setPageNav] = useState(0);
   const [group, setGroup] = useState({});
+  const [loadingGroups, setloadingGroups] = useState(true);
 
   useEffect(() => {
     fetch("/groups/" + groupId)
@@ -33,11 +34,11 @@ export default function GroupFocus() {
 
   function shownPage() {
     if (pageNav === 0) {
-      return <RollCallsGroup group={group} />;
+      return <RollCallsGroup group={group} loadingGroups={loadingGroups} />;
     } else if (pageNav === 1) {
       return <Members group={group} />;
-    } else if (pageNav === 2) {
-      return <GroupChat group={group} />;
+      // } else if (pageNav === 2) {
+      //   return <GroupChat group={group} />;
     } else if (pageNav === 3) {
       return <Settings group={group} />;
     }
@@ -46,17 +47,7 @@ export default function GroupFocus() {
   return (
     <div className="p-2">
       <Tabs tabs={tabs} pageNav={pageNav} setPageNav={setPageNav} />
-
       {shownPage()}
-
-      {/* <ul
-        role="list"
-        className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-      >
-        {people.map((person) => (
-          <Member person={person} />
-        ))}
-      </ul> */}
     </div>
   );
 }

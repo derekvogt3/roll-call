@@ -1,7 +1,6 @@
 class UserSerializer < ActiveModel::Serializer
   attributes :id, :username, :email, :avatar_url
 
-  has_many :roll_call_posts
 
   def avatar_url
     if object.avatar.attached?

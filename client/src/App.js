@@ -36,7 +36,7 @@ const navigation = [
   { name: "Groups", href: "groups", icon: UserGroupIcon },
   { name: "Notifications", href: "notifications", icon: BellIcon },
   { name: "History", href: "history", icon: BookOpenIcon },
-  { name: "Chat", href: "chats", icon: ChatAlt2Icon },
+  // { name: "Chat", href: "chats", icon: ChatAlt2Icon },
   { name: "Profile", href: "profile", icon: UserIcon },
 ];
 
@@ -44,7 +44,7 @@ function App() {
   const [user, setUser] = useState(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const [refresh, setRefresh] = useState(false)
+  const [refresh, setRefresh] = useState(false);
 
   useEffect(() => {
     fetch("/me").then((r) => {
@@ -249,10 +249,17 @@ function App() {
             <Route path="groups/:groupId" element={<GroupFocus />} />
             <Route path="notifications" element={<Notifications />} />
             <Route path="history" element={<History />} />
-            <Route path="chats" element={<Chats />} />
+            {/* <Route path="chats" element={<Chats />} /> */}
             <Route
               path="profile"
-              element={<Profile setUser={setUser} user={user} refresh={refresh} setRefresh={setRefresh} />}
+              element={
+                <Profile
+                  setUser={setUser}
+                  user={user}
+                  refresh={refresh}
+                  setRefresh={setRefresh}
+                />
+              }
             />
             <Route path="/login" element={<Login setUser={setUser} />} />
           </Routes>

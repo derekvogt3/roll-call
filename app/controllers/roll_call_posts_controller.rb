@@ -18,9 +18,7 @@ class RollCallPostsController < ApplicationController
             filename: params[:a_roll_call_id].to_s+"a"+session[:user_id].to_s+".png",
             content_type: "image/png",
           )
-
         new_roll_call.photo.attach(blob)
-
         render json: new_roll_call, status: :created
     end
 

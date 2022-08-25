@@ -4,21 +4,14 @@ import CreateRollCallModal from "./CreateRollCallModal";
 import { useEffect } from "react";
 import RollCallHome from "../../../common/RollCallHome";
 
-export default function RollCallsGroup({ group }) {
+export default function RollCallsGroup({ group, loadingGroups }) {
   const [openCreate, setOpenCreate] = useState(false);
   const [rollCalls, setRollCalls] = useState([]);
+  console.log(group);
 
-  useEffect(() => {
-    fetch("/a_roll_calls")
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        setRollCalls(data);
-      });
-  }, []);
-
-  const rollCallsToInclude = rollCalls.map((rollCall) => {
-    return <RollCallHome key={rollCall.id} rollCall={rollCall} />;
+  const rollCallsToInclude = group.a_roll_calls.map((rollCall) => {
+    // return <RollCallHome key={rollCall.id} rollCall={rollCall} />;
+    console.log(rollCall);
   });
 
   return (
@@ -30,7 +23,7 @@ export default function RollCallsGroup({ group }) {
       >
         Start Roll Call
       </button>
-      <div className="overflow-auto p-2">{rollCallsToInclude}</div>
+      <div className="overflow-auto p-2">{/* {rollCallsToInclude} */}</div>
       <CreateRollCallModal
         group={group}
         openCreate={openCreate}
