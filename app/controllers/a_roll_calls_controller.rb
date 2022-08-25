@@ -3,7 +3,8 @@ class ARollCallsController < ApplicationController
   before_action :set_rollCall, only: [:show, :update]
 
   def index
-    render json: ARollCall.all
+    user = User.find(session[:user_id])
+    render json: user.a_roll_calls
   end
 
   def show

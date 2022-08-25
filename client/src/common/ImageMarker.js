@@ -2,10 +2,10 @@ import React from "react";
 import { Fragment, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { XIcon } from "@heroicons/react/outline";
+import { v4 as uuidv4 } from "uuid";
 
 export default function ImageMarker({ postObj }) {
   const [open, setOpen] = useState(false);
-  console.log(postObj);
 
   function returnedInput() {
     if (postObj.hasChildren) {
@@ -13,20 +13,26 @@ export default function ImageMarker({ postObj }) {
         <>
           <img
             className="inline-block h-14 w-14 ring-4 ring-white object-cover"
-            src={postObj.children[0].properties.img}
+            src={postObj.children[1].properties.img}
           />
           <div className="bg-white w-14 ring-4 ring-white flex justify-center">
             {postObj.children.map((child) => {
-              if (child.properties.user_obj.avatar_url) {
+              {
+                if (child.properties.user_obj.avatar_url) {
+                  return (
+                    <img
+                      key={child.properties.id}
+                      className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+                      src={child.properties.user_obj.avatar_url}
+                    />
+                  );
+                } else {
+                }
                 return (
-                  <img
-                    className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
-                    src={child.properties.user_obj.avatar_url}
-                  />
-                );
-              } else {
-                return (
-                  <span className="inline-block h-6 w-6 rounded-full overflow-hidden">
+                  <span
+                    key={uuidv4()}
+                    className="inline-block h-6 w-6 rounded-full overflow-hidden"
+                  >
                     <svg
                       className="h-full w-full text-gray-300"
                       fill="currentColor"
@@ -36,6 +42,8 @@ export default function ImageMarker({ postObj }) {
                     </svg>
                   </span>
                 );
+                {
+                }
               }
             })}
           </div>

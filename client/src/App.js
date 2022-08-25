@@ -35,7 +35,7 @@ const navigation = [
   { name: "Home", href: "/", icon: HomeIcon },
   { name: "Groups", href: "groups", icon: UserGroupIcon },
   { name: "Notifications", href: "notifications", icon: BellIcon },
-  { name: "History", href: "history", icon: BookOpenIcon },
+  // { name: "History", href: "history", icon: BookOpenIcon },
   // { name: "Chat", href: "chats", icon: ChatAlt2Icon },
   { name: "Profile", href: "profile", icon: UserIcon },
 ];

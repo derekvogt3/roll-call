@@ -3,6 +3,8 @@ import GoogleMapReact from "google-map-react";
 import { fitBounds } from "google-map-react";
 import { useState, useEffect, useRef } from "react";
 import useSupercluster from "use-supercluster";
+import { v4 as uuidv4 } from "uuid";
+import Supercluster from "supercluster";
 
 import ImageMarker from "./ImageMarker";
 
@@ -16,10 +18,16 @@ export default function PictureMap({ rollCall, mapWidth, mapHeight }) {
     height: window.innerHeight * 0.3, // Map height in pixels
   };
 
-  const posts = rollCall.roll_call_posts.map((post) => {
-    post["group_summary"] = rollCall.group_summary;
-    return post;
-  });
+  const points = rollCall.roll_call_posts.map((post) => ({
+    type: "Feature",
+    properties: {
+      img: post.photo_url,
+      caption: post.comment,
+      id: post.id,
+      user_obj: rollCall.group_summary.users.find((x) => x.id === post.user_id),
+    },
+    geometry: { type: "Point", coordinates: [post.lng, post.lat] },
+  }));
 
   function getMinMax(posts) {
     const bounds = {
@@ -36,30 +44,39 @@ export default function PictureMap({ rollCall, mapWidth, mapHeight }) {
     return bounds;
   }
 
-  const points = posts.map((post) => ({
-    type: "Feature",
-    properties: {
-      img: post.photo_url,
-      caption: post.comment,
-      id: post.id,
-      user_obj: post.group_summary.users.find((x) => x.id === post.user_id),
-    },
-    geometry: { type: "Point", coordinates: [post.lng, post.lat] },
-  }));
-
-  const defaultBounds = getMinMax(posts);
+  const defaultBounds = getMinMax(rollCall.roll_call_posts);
   //if ther is only 1 post, use the post lat lng as a center, otherwise, use the fitBounds formula to calculate
   const { center, zoom } =
-    posts.length === 1
-      ? { center: { lat: posts[0].lat, lng: posts[0].lng }, zoom: 11 }
+    rollCall.roll_call_posts.length === 1
+      ? {
+          center: {
+            lat: rollCall.roll_call_posts[0].lat,
+            lng: rollCall.roll_call_posts[0].lng,
+          },
+          zoom: 11,
+        }
       : fitBounds(defaultBounds, size);
 
   const { clusters, supercluster } = useSupercluster({
     points,
     bounds,
     zoom: dynamicZoom,
-    options: { radius: 75, maxZoom: 20 },
+    options: { radius: 75, maxZoom: 18 },
   });
+
+  function flattenChildren(children, childArray) {
+    children.forEach((child) => {
+      if (child.properties.cluster) {
+        flattenChildren(
+          supercluster.getChildren(child.properties.cluster_id),
+          childArray
+        );
+      } else {
+        childArray.push(child);
+      }
+    });
+    return childArray;
+  }
 
   const imageClusterMarkers = clusters.map((cluster) => {
     const [longitude, latitude] = cluster.geometry.coordinates;
@@ -67,15 +84,20 @@ export default function PictureMap({ rollCall, mapWidth, mapHeight }) {
 
     let postObj = {};
 
+    let childArray = [];
+
     if (isCluster) {
       postObj = {
-        key: "cluster-" + cluster.id,
+        key: "cluster-" + uuidv4(),
         hasChildren: true,
-        children: supercluster.getChildren(cluster.id),
+        children: flattenChildren(
+          supercluster.getChildren(cluster.id),
+          childArray
+        ),
       };
     } else {
       postObj = {
-        key: "post-" + cluster.properties.id,
+        key: "post-" + uuidv4(),
         hasChildren: false,
         properties: cluster.properties,
       };
