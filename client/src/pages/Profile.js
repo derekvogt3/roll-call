@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AddAvatarModal from "../page_components/profile/AddAvatarModal";
 import UserRollcallPostsContainer from "../page_components/profile/UserRollcallPostsCotainer";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 
@@ -16,7 +16,6 @@ export default function Profile({
 }) {
   const [openCreate, setOpenCreate] = useState(false);
   const [userWithPosts, setUserWithPosts] = useState({});
-  const [groups, setGroups] = useState([]);
   const [loaded, setLoaded] = useState(false);
 
   const navigate = useNavigate();
@@ -26,31 +25,10 @@ export default function Profile({
       setLoaded(false);
       if (r.ok) {
         setLoaded(true);
-        r.json().then((data) => {
-          console.log("'/ME' USER: ", user);
-          console.log("USER POSTS: ", data);
-          setUserWithPosts(data);
-        });
+        r.json().then((data) => setUserWithPosts(data));
       }
     });
   }, []);
-
-  {
-    /*
-  useEffect(() => {
-    setLoaded(false);
-    fetch(`/groups/${user.id}`).then((r) => {
-      setLoaded(true);
-      if (r.ok) {
-        r.json().then((data) => {
-          console.log("USER GROUPS: ", data)
-          setUser(data)
-        });
-      }
-    });
-  }, []);
-  */
-  }
 
   function logout() {
     fetch("/logout", { method: "DELETE" });

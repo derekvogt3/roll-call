@@ -4,7 +4,7 @@ import CreateRollCallModal from "./CreateRollCallModal";
 import { useEffect } from "react";
 import RollCallHome from "../../../common/RollCallHome";
 
-export default function RollCallsGroup({ group, loadingGroups, notify, setNotify, pushNotifications }) {
+export default function RollCallsGroup({ group, loadingGroups, notify, setNotify, pushNotifications, shownPage, refresh, setRefresh }) {
   const [openCreate, setOpenCreate] = useState(false);
 
   function spinner() {
@@ -62,6 +62,9 @@ export default function RollCallsGroup({ group, loadingGroups, notify, setNotify
         notify={notify}
         setNotify={setNotify}
         pushNotifications={pushNotifications}
+        shownPage={shownPage}
+        refresh={refresh}
+        setRefresh={setRefresh}
       />
     </div>
   );

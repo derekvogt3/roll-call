@@ -59,15 +59,20 @@ function App() {
   }, [refresh]);
 
   const pushNotifications = () => {
-    toast.info(`${user.username} you've got a new rollcall!`, {
-      position: "top-left",
-      autoClose: false,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: true,
-      progress: undefined,
-    });
+    toast.info(
+      `${
+        user.username.charAt(0).toUpperCase() + user.username.slice(1)
+      } you've got a new rollcall!`,
+      {
+        position: "top-left",
+        autoClose: false,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      }
+    );
   };
 
   if (!loaded) return <></>;
@@ -187,7 +192,6 @@ function App() {
             </div>
           </Dialog>
         </Transition.Root>
-
         {/* Static sidebar for desktop */}
         <div className="hidden lg:flex lg:flex-shrink-0">
           <div className="flex flex-col w-20 h-screen">

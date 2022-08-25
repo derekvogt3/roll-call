@@ -10,9 +10,11 @@ export default function CreateRollCallModal({
   group,
   openCreate,
   setOpenCreate,
-  notify,
   setNotify,
-  pushNotifications
+  pushNotifications,
+  shownPage,
+  refresh,
+  setRefresh
 }) {
   
   const [selected, setSelected] = useState({ id: 1, name: "1 Hour", hours: 1 });
@@ -41,6 +43,10 @@ export default function CreateRollCallModal({
       console.log("FILTERED ROLLCALL: ", data)
       setNotify(data)
       pushNotifications()
+      shownPage()
+      console.log("FRESH FRESH FRESH:", refresh);
+      setRefresh(!refresh)
+      console.log("REFRESHED:", refresh);
     })
   }
 
