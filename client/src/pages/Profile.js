@@ -9,10 +9,13 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function Profile({ user, setUser, refresh, setRefresh }) {
 
   const [openCreate, setOpenCreate] = useState(false);
-  const [loaded, setLoaded] = useState(false)
+  const [userWithPosts, setUserWithPosts] = useState({});
+  const [groups, setGroups] = useState([]);
+  const [loaded, setLoaded] = useState(false);
 
   const navigate = useNavigate();
 
+  {/*
   const notify = () =>
     toast.info(`${user.username} sent you a new rollcall!`, {
       position: "top-left",
@@ -24,7 +27,6 @@ export default function Profile({ user, setUser, refresh, setRefresh }) {
       progress: undefined,
     });
 
-  {/*
     <div>
       <button
         style={{background: "red"}} 
@@ -37,22 +39,64 @@ export default function Profile({ user, setUser, refresh, setRefresh }) {
   */}
 
   useEffect(() => {
-    fetch(`posts/user/${user.id}`).then((r) => {
+    fetch(`/user/groups`).then((r) => {
       setLoaded(false);
       if (r.ok) {
         setLoaded(true);
         r.json().then((data) => {
+          console.log("'/ME' USER: ", user)
           console.log("USER POSTS: ", data)
+          //setUserWithPosts(data)
+        });
+      }
+    });
+  }, []);
+
+  {/*
+  useEffect(() => {
+    setLoaded(false);
+    fetch(`/groups/${user.id}`).then((r) => {
+      setLoaded(true);
+      if (r.ok) {
+        r.json().then((data) => {
+          console.log("USER GROUPS: ", data)
           setUser(data)
         });
       }
     });
   }, []);
+  */}
   
   function logout(){
     fetch("/logout", { method: "DELETE" })
     setUser(null)
     navigate("/login")
+  };
+
+  function notification(){
+
+    
+
+    
+    if(groups.map(user)
+    
+    .filter((user) => user.includes(user))){
+      
+      
+      
+      
+      
+      
+      toast.info(`${user.username} sent you a new rollcall!`, {
+        position: "top-left",
+        autoClose: false,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: true,
+        progress: undefined,
+      });
+    }
   };
 
   return ( 
@@ -72,6 +116,7 @@ export default function Profile({ user, setUser, refresh, setRefresh }) {
         }
       </div>
       <br/>
+      {}
       <ToastContainer />
       <p>Lorem ipsum dolor sit amet. Quo corporis fugiat aut sapiente dolor a nemo asperiores eum ipsam omnis nam fuga corrupti et minus excepturi. Sed sint ipsum ut asperiores debitis et dolores sunt qui tempore odio.</p>
       <br/>
@@ -82,10 +127,13 @@ export default function Profile({ user, setUser, refresh, setRefresh }) {
         logout
       </button>
       {openCreate ? 
-        <AddAvatarModal openCreate={openCreate} setOpenCreate={setOpenCreate} user={user} refresh={refresh} setRefresh={setRefresh}/> : <></>
+        <AddAvatarModal openCreate={openCreate} setOpenCreate={setOpenCreate} user={user} refresh={refresh} setRefresh={setRefresh}/>
+        : <></>
       }
-      {}
-      {user.roll_call_posts > 0 ? <UserRollcallPostsContainer user={user} /> : <></>}
+      {userWithPosts.roll_call_posts?.length > 0 ? 
+        <UserRollcallPostsContainer user={userWithPosts} /> 
+        : <></>
+      }
     </div>
     );
 }

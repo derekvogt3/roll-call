@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoginForm from "../page_components/authentication/LoginForm";
 import SignUpForm from "../page_components/authentication/SignUpForm";
 
