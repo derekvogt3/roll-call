@@ -11,8 +11,6 @@ export default function Profile({ user, setUser, refresh, setRefresh }) {
   const [openCreate, setOpenCreate] = useState(false);
 
   const navigate = useNavigate();
-
-  console.log("USER: ", user);
   
   function logout(){
     fetch("/logout", { method: "DELETE" })
@@ -48,7 +46,8 @@ export default function Profile({ user, setUser, refresh, setRefresh }) {
       {openCreate ? 
         <AddAvatarModal openCreate={openCreate} setOpenCreate={setOpenCreate} user={user} refresh={refresh} setRefresh={setRefresh}/> : <></>
       }
-      <UserRollcallPostsContainer user={user} />
+      {}
+      {user.roll_call_posts > 0 ? <UserRollcallPostsContainer user={user} /> : <></>}
     </div>
     );
 }
