@@ -27,7 +27,7 @@ Rails.application.routes.draw do
   get 'posts/user/:id', to: "users#userPosts"
 
   # Check for notifications
-  get '/user/groups', to: "users#hasPosted?"
+  get '/user/groups/posted', to: "users#hasPosted?"
 
   # added to direct routes to react if they aren't associated with an api
   get '*path',
