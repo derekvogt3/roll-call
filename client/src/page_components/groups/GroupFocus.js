@@ -13,7 +13,7 @@ const tabs = [
   { name: "Roll Cals", nav: 0 },
   { name: "Members", nav: 1 },
   // { name: "Chat", nav: 2 },
-  { name: "Settings", nav: 3 },
+  // { name: "Settings", nav: 3 },
 ];
 
 export default function GroupFocus({ notify, setNotify, pushNotifications }) {
@@ -33,7 +33,15 @@ export default function GroupFocus({ notify, setNotify, pushNotifications }) {
 
   function shownPage() {
     if (pageNav === 0) {
-      return <RollCallsGroup group={group} loadingGroups={loadingGroups} notify={notify} setNotify={setNotify} pushNotifications={pushNotifications} />;
+      return (
+        <RollCallsGroup
+          group={group}
+          loadingGroups={loadingGroups}
+          notify={notify}
+          setNotify={setNotify}
+          pushNotifications={pushNotifications}
+        />
+      );
     } else if (pageNav === 1) {
       return <Members group={group} />;
       // } else if (pageNav === 2) {
@@ -44,7 +52,7 @@ export default function GroupFocus({ notify, setNotify, pushNotifications }) {
   }
 
   return (
-    <div className="p-2">
+    <div className="p-2 overflow-auto">
       <Tabs tabs={tabs} pageNav={pageNav} setPageNav={setPageNav} />
       {shownPage()}
     </div>

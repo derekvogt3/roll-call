@@ -3,21 +3,34 @@ import PictureMap from "../common/PictureMap";
 import ImageMarker from "../common/ImageMarker";
 import Login from "./Login";
 import RollCallHome from "../common/RollCallHome";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function Home({ user }) {
+  const [groupsArray, setGroupsArray] = useState([]);
   useEffect(() => {
-    fetch("/a_roll_calls")
+    setGroupsArray([]);
+    fetch("/groups")
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        data.forEach((group) => {
+          fetch("/groups/" + group.id)
+            .then((res) => res.json())
+            .then((data) => setGroupsArray((array) => [...array, data]));
+        });
+      });
   }, []);
 
-  return (
-    <div className="overflow-auto p-2">
-      {/* <RollCallHome />
-      <RollCallHome />
-      <RollCallHome />
-      <RollCallHome /> */}
-    </div>
-  );
+  const postsToInclude = groupsArray.map((group) => {
+    return group.a_roll_calls.map((rollCall) => {
+      return (
+        <RollCallHome
+          key={rollCall.id}
+          rollCall={rollCall}
+          groupSummary={group}
+        />
+      );
+    });
+  });
+
+  return <div className="overflow-auto p-2">{postsToInclude}</div>;
 }
