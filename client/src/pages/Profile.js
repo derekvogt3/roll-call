@@ -59,7 +59,7 @@ export default function Profile({ user, setUser, refresh, setRefresh, pushNotifi
           </div>
         )}
       </div>
-      <br />
+      <br/>
       {notify.forEach((alert) => pushNotifications)}
       <ToastContainer />
       {user.bio ? <p>{user.bio}</p> : <h5>Add a bio and let people know a bit about you!</h5>}
