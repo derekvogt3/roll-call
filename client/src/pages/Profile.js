@@ -1,26 +1,19 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+
 import AddAvatarModal from "../page_components/profile/AddAvatarModal";
 import UserRollcallPostsContainer from "../page_components/profile/UserRollcallPostsCotainer";
-import { ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
 
-export default function Profile({
-  user,
-  setUser,
-  refresh,
-  setRefresh,
-  pushNotifications,
-  notify,
-}) {
+export default function Profile({ user, setUser, refresh, setRefresh, pushNotifications, notify }) {
+  
   const [openCreate, setOpenCreate] = useState(false);
   const [userWithPosts, setUserWithPosts] = useState({});
   const [loaded, setLoaded] = useState(false);
 
   const navigate = useNavigate();
-
-  console.log("OUTTER USER BIO: ", user.bio);
 
   useEffect(() => {
     fetch(`posts/user/${user.id}`).then((r) => {
@@ -38,6 +31,8 @@ export default function Profile({
     navigate("/login");
   }
 
+  if (!loaded) return <></>;
+  
   return (
     <div className="basis-1/4 flex items-center flex-col justify-center py-12 px-4 sm:px-6 lg:px-80">
       <h1>WELCOME {user.username.toUpperCase()}!</h1>
