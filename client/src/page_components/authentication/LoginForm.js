@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { LockClosedIcon } from "@heroicons/react/solid";
 
-export default function LoginForm({ setUser }) {
+export default function LoginForm({ setUser, setinvalidLogin }) {
   // eslint-disable-next-line
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [username, setUsername] = useState("");
@@ -32,6 +32,7 @@ export default function LoginForm({ setUser }) {
         navigate("/profile")
       } else {
         r.json().then((err) => setErrors(err.errors));
+        setinvalidLogin(true)
       }
     });
   }

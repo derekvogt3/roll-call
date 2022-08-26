@@ -40,7 +40,6 @@ export default function CreateRollCallModal({
     fetch("/user/groups/posted")
     .then((r) => r.json())
     .then((data) => {
-      console.log("FILTERED ROLLCALL: ", data)
       setNotify(data)
       pushNotifications()
       setRefresh(!refresh)
