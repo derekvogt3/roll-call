@@ -9,7 +9,11 @@ import { XIcon } from "@heroicons/react/outline";
 import { Dialog } from "@headlessui/react";
 import InviteGroupMembers from "./InviteGroupMembers";
 
-export default function CreateGroupModal({ openCreate, setOpenCreate }) {
+export default function CreateGroupModal({
+  openCreate,
+  setOpenCreate,
+  fetchGroups,
+}) {
   const [groupName, setGroupName] = useState("");
   const [nav, setNav] = useState(0);
   const [group, setGroup] = useState({});
@@ -31,6 +35,11 @@ export default function CreateGroupModal({ openCreate, setOpenCreate }) {
         setGroup(data);
         setNav(1);
       });
+  }
+
+  function onContinue() {
+    setOpenCreate(false);
+    fetchGroups();
   }
 
   function postPage() {
@@ -71,7 +80,7 @@ export default function CreateGroupModal({ openCreate, setOpenCreate }) {
         </div>
       );
     } else if (nav === 1) {
-      return <InviteGroupMembers group={group} />;
+      return <InviteGroupMembers onContinue={onContinue} group={group} />;
     }
   }
   return (

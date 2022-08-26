@@ -4,7 +4,7 @@ import { UsersIcon } from "@heroicons/react/outline";
 import { SearchIcon } from "@heroicons/react/outline";
 import { PlusSmIcon } from "@heroicons/react/outline";
 
-export default function InviteGroupMembers({ group }) {
+export default function InviteGroupMembers({ group, onContinue }) {
   const [people, setPeople] = useState([]);
   const [addedPeople, setAddedPeople] = useState([]);
 
@@ -108,37 +108,17 @@ export default function InviteGroupMembers({ group }) {
             Add Group Members
           </h2>
         </div>
-        <div>
-          <div className="mt-1 flex rounded-md shadow-sm">
-            <div className="relative flex items-stretch flex-grow focus-within:z-10">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <UsersIcon
-                  className="h-5 w-5 text-gray-400"
-                  aria-hidden="true"
-                />
-              </div>
-              <input
-                type="email"
-                name="email"
-                id="email"
-                className="focus:ring-indigo-500 focus:border-indigo-500 block w-full rounded-none rounded-l-md pl-10 sm:text-sm border-gray-300"
-                placeholder="John Smith"
-              />
-            </div>
-            <button
-              type="button"
-              className="-ml-px relative inline-flex items-center space-x-2 px-4 py-2 border border-gray-300 text-sm font-medium rounded-r-md text-gray-700 bg-gray-50 hover:bg-gray-100 focus:outline-none focus:ring-1 focus:ring-indigo-500 focus:border-indigo-500"
-            >
-              <SearchIcon
-                className="h-5 w-5 text-gray-400"
-                aria-hidden="true"
-              />
-              <span>Search</span>
-            </button>
-          </div>
+        <div className="p-2">
+          <button
+            type="button"
+            className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            onClick={() => onContinue()}
+          >
+            Continue
+          </button>
         </div>
       </div>
-      <div className="mt-10">
+      <div>
         <ul
           role="list"
           className="mt-4 border-t border-b border-gray-200 divide-y divide-gray-200"

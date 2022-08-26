@@ -4,7 +4,16 @@ import CreateRollCallModal from "./CreateRollCallModal";
 import { useEffect } from "react";
 import RollCallHome from "../../../common/RollCallHome";
 
-export default function RollCallsGroup({ group, loadingGroups, notify, setNotify, pushNotifications, shownPage, refresh, setRefresh }) {
+export default function RollCallsGroup({
+  group,
+  loadingGroups,
+  notify,
+  setNotify,
+  pushNotifications,
+  shownPage,
+  refresh,
+  setRefresh,
+}) {
   const [openCreate, setOpenCreate] = useState(false);
 
   function spinner() {
@@ -47,13 +56,15 @@ export default function RollCallsGroup({ group, loadingGroups, notify, setNotify
 
   return (
     <div>
-      <button
-        type="button"
-        className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-        onClick={() => setOpenCreate(true)}
-      >
-        Start Roll Call
-      </button>
+      <div className="p-4">
+        <button
+          type="button"
+          className="inline-flex items-center px-4 py-2 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          onClick={() => setOpenCreate(true)}
+        >
+          Start Roll Call
+        </button>
+      </div>
       <div className="overflow-auto p-2">{rollCallsToInclude}</div>
       <CreateRollCallModal
         group={group}

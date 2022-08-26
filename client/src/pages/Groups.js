@@ -14,6 +14,14 @@ export default function Groups() {
       });
   }, []);
 
+  function fetchGroups() {
+    fetch("/groups")
+      .then((res) => res.json())
+      .then((data) => {
+        setGroups(data);
+      });
+  }
+
   const groupstoInclude = groups.map((group) => {
     return <GroupSummary key={group.id} group={group} />;
   });
@@ -68,7 +76,11 @@ export default function Groups() {
       )}
 
       <Outlet />
-      <CreateGroupModal openCreate={openCreate} setOpenCreate={setOpenCreate} />
+      <CreateGroupModal
+        fetchGroups={fetchGroups}
+        openCreate={openCreate}
+        setOpenCreate={setOpenCreate}
+      />
     </div>
   );
 }

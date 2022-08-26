@@ -37,6 +37,7 @@ export default function UploadPost({ rollCall, openPost, setOpenPost }) {
     } else {
       console.log("error no location found");
     }
+    setOpenPost(false);
   }
 
   const isFullscreen = false;

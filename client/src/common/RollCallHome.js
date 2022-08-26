@@ -10,6 +10,32 @@ export default function RollCallHome({ rollCall, groupSummary }) {
 
   rollCall["group_summary"] = groupSummary;
 
+  var createdAtDate = new Date(rollCall.created_at);
+  var date = createdAtDate.getDate();
+  var month = createdAtDate.getMonth(); //Be careful! January is 0 not 1
+  var year = createdAtDate.getFullYear();
+
+  var dateString = month + 1 + "-" + date + "-" + year;
+
+  var endTimeDate = new Date(rollCall.end_time);
+  var date = endTimeDate.getDate();
+  var month = endTimeDate.getMonth(); //Be careful! January is 0 not 1
+  var year = endTimeDate.getFullYear();
+
+  var enddateString =
+    month +
+    1 +
+    "-" +
+    date +
+    "-" +
+    year +
+    " " +
+    endTimeDate.getHours() +
+    ":" +
+    endTimeDate.getMinutes() +
+    ":" +
+    endTimeDate.getSeconds();
+
   return (
     <>
       <div className="bg-white shadow overflow-hidden sm:rounded-md flex flex-col mt-4 p-2">
@@ -19,7 +45,7 @@ export default function RollCallHome({ rollCall, groupSummary }) {
             aria-hidden="true"
           />
           <p>
-            <time>{rollCall.created_at}</time>
+            <time>{dateString}</time>
           </p>
         </div>
         <div className="flex flex-col lg:flex-row-reverse justify-items-stretch ">
@@ -55,8 +81,8 @@ export default function RollCallHome({ rollCall, groupSummary }) {
               {groupSummary.name}
             </p>
             <p>
-              You have a roll call due by {rollCall.end_time}, submit a post to
-              add a photo to the map!
+              You have a roll call due by {enddateString}, submit a post to add
+              a photo to the map!
             </p>
 
             <button

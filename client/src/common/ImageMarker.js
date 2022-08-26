@@ -48,7 +48,7 @@ export default function ImageMarker({ postObj }) {
 
                 {
                 }
-              } else if (idx === 3) {
+              } else if (idx === 2) {
                 return (
                   <span className="absolute -right-6 bottom-20 inline-flex items-center px-3 py-0.5 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
                     +{postObj.children.length}
@@ -139,7 +139,7 @@ export default function ImageMarker({ postObj }) {
                         />
                         <div className="flex w-100 justify-between">
                           {currentPhotoIdx === 0 ? (
-                            <div></div>
+                            <div className="w-14 h-14"></div>
                           ) : (
                             <div
                               onClick={() =>
@@ -150,12 +150,12 @@ export default function ImageMarker({ postObj }) {
                             </div>
                           )}
 
-                          <div className="bg-white w-14 ring-4 ring-white flex justify-center">
+                          <div className="flex items-center">
                             {postObj.children[currentPhotoIdx].properties
                               .user_obj.avatar_url ? (
                               <>
                                 <img
-                                  className="inline-block h-6 w-6 rounded-full ring-2 ring-white"
+                                  className="inline-block h-12 w-12 rounded-full ring-2 ring-white"
                                   src={
                                     postObj.children[currentPhotoIdx].properties
                                       .user_obj.avatar_url
@@ -163,7 +163,7 @@ export default function ImageMarker({ postObj }) {
                                 />
                               </>
                             ) : (
-                              <span className="inline-block h-6 w-6 rounded-full overflow-hidden bg-gray-100">
+                              <span className="inline-block h-14 w-14 rounded-full overflow-hidden bg-gray-100">
                                 <svg
                                   className="h-full w-full text-gray-300"
                                   fill="currentColor"
@@ -173,10 +173,24 @@ export default function ImageMarker({ postObj }) {
                                 </svg>
                               </span>
                             )}
+                            <div className="flex flex-col p-2">
+                              <h4 className="text-lg font-bold ">
+                                {
+                                  postObj.children[currentPhotoIdx].properties
+                                    .user_obj.username
+                                }
+                              </h4>
+                              <p>
+                                {
+                                  postObj.children[currentPhotoIdx].properties
+                                    .user_obj.caption
+                                }
+                              </p>
+                            </div>
                           </div>
 
                           {currentPhotoIdx === postObj.children.length - 1 ? (
-                            <div></div>
+                            <div className="w-14 h-14"></div>
                           ) : (
                             <div
                               onClick={() =>
@@ -189,10 +203,36 @@ export default function ImageMarker({ postObj }) {
                         </div>
                       </>
                     ) : (
-                      <img
-                        className="ring-2 ring-white object-cover"
-                        src={postObj.properties.img}
-                      />
+                      <>
+                        <img
+                          className="ring-2 ring-white object-cover"
+                          src={postObj.properties.img}
+                        />
+
+                        <div className="flex items-center justify-center h-14">
+                          {postObj.properties.user_obj.avatar_url ? (
+                            <>
+                              <img
+                                className="inline-block h-12 w-12 rounded-full ring-2 ring-white"
+                                src={postObj.properties.user_obj.avatar_url}
+                              />
+                            </>
+                          ) : (
+                            <span className="inline-block h-14 w-14 rounded-full overflow-hidden bg-gray-100">
+                              <svg
+                                className="h-full w-full text-gray-300"
+                                fill="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                              </svg>
+                            </span>
+                          )}
+                          <h4 className="text-lg font-bold p-2">
+                            {postObj.properties.user_obj.username}
+                          </h4>
+                        </div>
+                      </>
                     )}
                   </div>
                 </Dialog.Panel>
