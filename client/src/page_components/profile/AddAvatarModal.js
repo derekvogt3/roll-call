@@ -13,36 +13,24 @@ export default function AddAvatarModal({ openCreate, setOpenCreate, user, refres
 
     function handleAddAvatr(){
 
-        formData.append("avatar", avatar)
-
-        if(user.bio === ""){
-            console.log("USER BIO EMPTY ", user.bio);
-            formData.delete("bio")
-            fetch(`/users/avatar/${user.id}`, {
-                method: "PATCH",
-                body: formData,
-            })
-            .then((r) => r.json())
-            .then(() => {
-                setAvatar("")
-                setRefresh(!refresh)
-                setOpenCreate(false)
-            })
-        }else{
+        if(bio){
             formData.append("bio", bio)
-            fetch(`/users/avatar/${user.id}`, {
-                method: "PATCH",
-                body: formData,
-            })
-            .then((r) => r.json())
-            .then(() => {
-                setAvatar("")
-                setRefresh(!refresh)
-                setOpenCreate(false)
-                console.log("ELSE -- USER: ", user);
-                console.log("ELSE -- USER BIO: ", user.bio);
-            })
-        }
+        };
+        if(avatar){
+            formData.append("avatar", avatar)
+        };
+
+        fetch(`/users/info/${user.id}`, {
+            method: "PATCH",
+            body: formData,
+        })
+        .then((r) => r.json())
+        .then(() => {
+            setAvatar("")
+            setBio("")
+            setRefresh(!refresh)
+            setOpenCreate(false)
+        });
     };
     
     function postPage(){
@@ -143,5 +131,5 @@ export default function AddAvatarModal({ openCreate, setOpenCreate, user, refres
             </div>
         </Dialog>
         </Transition.Root>
-    )
-}
+    );
+};

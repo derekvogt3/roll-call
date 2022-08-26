@@ -1,6 +1,6 @@
 class UserShowPostsSerializer < ActiveModel::Serializer
   
-  attributes :id, :username, :email, :avatar_url
+  attributes :id, :username, :email, :avatar_url, :bio
 
   has_many :roll_call_posts
 

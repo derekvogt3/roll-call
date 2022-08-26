@@ -17,7 +17,7 @@ class UsersController < ApplicationController
     end
 
     def update
-        render json: @current_user.update!(user_params)
+        render json: @current_user.update!(user_params), status: :accepted
     end
     
     def destroy
@@ -39,10 +39,17 @@ class UsersController < ApplicationController
         render json: @current_user, serializer: UserShowPostsSerializer
     end
 
-    def addAvatar
-            @current_user.update_attribute(:avatar, params[:avatar])
+    def updateInfo
+        if params.has_key?(:avatar) && params.has_key?(:bio)
             @current_user.update_attribute(:bio, params[:bio])
-            render json: @current_user
+            @current_user.update_attribute(:avatar, params[:avatar])
+        elsif params[:avatar]
+            @current_user.update_attribute(:avatar, params[:avatar])
+        elsif params[:bio]
+            @current_user.update_attribute(:bio, params[:bio])
+        end
+        render json: @current_user, status: :accepted
+
     end
     
     private

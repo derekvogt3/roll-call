@@ -14,20 +14,20 @@ Rails.application.routes.draw do
   get "/me", to: "session#show"
   # Logout user
   delete "/logout", to: "session#destroy"
-  #
+  # Check user permissions
   get "/auth", to: "users#show"
 
-  # root "articles#index"
-  get '/hello', to: 'application#hello_world'
-
-  # Add/change user's avatar
-  patch "/users/avatar/:id", to: "users#addAvatar"
-
+  # Add/change user's avatar and/or bio
+  patch "/users/info/:id", to: "users#updateInfo"
+  
   # Get user & their posts
   get 'posts/user/:id', to: "users#userPosts"
-
+  
   # Check for notifications
   get '/user/groups/posted', to: "users#hasPosted?"
+  
+  # root "articles#index"
+  get '/hello', to: 'application#hello_world'
 
   # added to direct routes to react if they aren't associated with an api
   get '*path',
