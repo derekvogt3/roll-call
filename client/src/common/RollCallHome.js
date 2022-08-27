@@ -97,7 +97,6 @@ export default function RollCallHome({ rollCall, groupSummary }) {
               />
               Post Roll-Call
             </button>
-            <h1>test</h1>
           </div>
         </div>
       </div>
